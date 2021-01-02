@@ -6,6 +6,7 @@ target 'Notes' do
   use_frameworks!
 
 pod 'Firebase/Firestore'
+pod 'Firebase/Auth'
 
   # Pods for Notes
 
