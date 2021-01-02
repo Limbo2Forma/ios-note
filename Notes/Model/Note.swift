@@ -16,6 +16,4 @@ struct Note : Identifiable, Codable {
     var location: String
     var content: String
     var date : String
-    
-    init()
 }

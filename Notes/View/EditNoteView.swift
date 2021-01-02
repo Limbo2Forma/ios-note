@@ -1,21 +1,30 @@
 import SwiftUI
 import Firebase
+import MDText
 
-struct EditView : View {
+struct EditNoteView : View {
     
-    var note: Note
+    var note: Note?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var title: String
-    @State var content: String
+    @State private var title = ""
+    @State private var content = ""
+    
+    init() {
+        if note != nil {
+            title = note?.title ?? ""
+            content = note?.content ?? ""
+        }
+    }
+    
+    
     
     var body : some View{
         
-        ZStack(alignment: .bottomTrailing) {
-            
-            Text(note.content)
-                .padding()
-                .background(Color.black.opacity(0.05))
-            
+        VStack() {
+            Form {
+                TextField("Note Title", text: $title)
+            }
+            Text("Tetert")
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {

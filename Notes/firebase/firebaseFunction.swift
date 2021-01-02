@@ -34,11 +34,10 @@ class getNotes : ObservableObject{
             }
             
             for i in snap!.documentChanges{
-                
+                print(i.document.data())
                 if i.type == .added{
                     
                     let id = i.document.documentID
-                    
                     let title = i.document.get("title") as! String
                     let location = i.document.get("location") as! String
                     let content = i.document.get("content") as! String
@@ -46,9 +45,7 @@ class getNotes : ObservableObject{
                     let ownerId = i.document.get("ownerId") as! String
                     
                     let format = DateFormatter()
-                    
                     format.dateFormat = "dd-MM-YY hh:mm a"
-                    
                     let dateString = format.string(from: date.dateValue())
                     
                     self.data.append(Note(id: id, ownerId: ownerId, title: title, location: location, content: content, date:dateString))
@@ -59,14 +56,15 @@ class getNotes : ObservableObject{
                     // when data is changed...
                     
                     let id = i.document.documentID
-                       
-                    let notes = i.document.get("notes") as! String
+                    let title = i.document.get("title") as! String
+                    let location = i.document.get("location") as! String
+                    let content = i.document.get("content") as! String
                     
                     for i in 0..<self.data.count{
-                        
                         if self.data[i].id == id{
-                            
-                            self.data[i].content = notes
+                            self.data[i].title = title
+                            self.data[i].location = location
+                            self.data[i].content = content
                         }
                     }
                 }
@@ -78,16 +76,11 @@ class getNotes : ObservableObject{
                     let id = i.document.documentID
                     
                     for i in 0..<self.data.count{
-                        
                         if self.data[i].id == id{
-                            
                             self.data.remove(at: i)
-                            
                             if self.data.isEmpty{
-                                
                                 self.noData = true
                             }
-                            
                             return
                         }
                     }
@@ -102,7 +95,6 @@ func SaveData(note: Note){
     let db = Firestore.firestore()
     
     if note.id != ""{
-        
         db.collection("notes").document(note.id).updateData([
             "ownerId": note.ownerId,
             "title": note.title,
@@ -120,7 +112,6 @@ func SaveData(note: Note){
     }
     
     else{
-        
         db.collection("notes").document().setData([
             "ownerId": note.ownerId,
             "title": note.title,
