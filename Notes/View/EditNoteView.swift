@@ -9,20 +9,11 @@ struct EditNoteView : View {
     @State private var title = ""
     @State private var content = ""
     
-    init() {
-        if note != nil {
-            title = note?.title ?? ""
-            content = note?.content ?? ""
-        }
-    }
-    
-    
-    
     var body : some View{
-        
         VStack() {
             Form {
                 TextField("Note Title", text: $title)
+                //RichDemoRepresentable()
             }
             Text("Tetert")
             Button(action: {

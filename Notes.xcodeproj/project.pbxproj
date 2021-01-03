@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B1DD737CC03C5DB32BB7BA4 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7275211752EDBBCEE3F78F /* Pods_Notes.framework */; };
 		7A57457E259F6CFC00AA5CB7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A57457D259F6CFC00AA5CB7 /* GoogleService-Info.plist */; };
 		7A5745A3259F77F600AA5CB7 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5745A2259F77F600AA5CB7 /* FacebookCore */; };
 		7A5745A5259F77F600AA5CB7 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5745A4259F77F600AA5CB7 /* FacebookLogin */; };
 		7A5745A7259F77F600AA5CB7 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5745A6259F77F600AA5CB7 /* FacebookShare */; };
 		7A5745B0259F7B6F00AA5CB7 /* fbLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745AF259F7B6F00AA5CB7 /* fbLogin.swift */; };
 		7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745B8259F7CD100AA5CB7 /* Note.swift */; };
-		7A5745C4259F998200AA5CB7 /* firebaseFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745C3259F998200AA5CB7 /* firebaseFunction.swift */; };
 		7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745D0259F9A6300AA5CB7 /* ListElement.swift */; };
 		7A5745DB259FAA3400AA5CB7 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */; };
-		A66EFD8025A04DF900346E6D /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = A66EFD7F25A04DF900346E6D /* FirebaseInstallations */; };
-		A66EFD8225A04DF900346E6D /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = A66EFD8125A04DF900346E6D /* FirebaseInAppMessaging-Beta */; };
-		A66EFD8425A04DF900346E6D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A66EFD8325A04DF900346E6D /* FirebaseAuth */; };
-		A66EFD8625A04DF900346E6D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A66EFD8525A04DF900346E6D /* FirebaseFirestore */; };
+		7AA53A2625A1CEC800416348 /* RichDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A2425A1CEC800416348 /* RichDemo.swift */; };
+		7AA53A7F25A1F5E700416348 /* firebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A7E25A1F5E700416348 /* firebaseAuth.swift */; };
+		7AA53A8225A1F7F400416348 /* firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8125A1F7F400416348 /* firestore.swift */; };
+		7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8525A1FA7900416348 /* NoteList.swift */; };
 		A66EFDC825A06A0000346E6D /* MDText in Frameworks */ = {isa = PBXBuildFile; productRef = A66EFDC725A06A0000346E6D /* MDText */; };
 		ADAC5DC7240AC8DA0079EB30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DC6240AC8DA0079EB30 /* AppDelegate.swift */; };
 		ADAC5DC9240AC8DA0079EB30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DC8240AC8DA0079EB30 /* SceneDelegate.swift */; };
@@ -30,12 +30,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D4E9CB458072990820B10FC /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
 		7A57457D259F6CFC00AA5CB7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7A5745AF259F7B6F00AA5CB7 /* fbLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fbLogin.swift; sourceTree = "<group>"; };
 		7A5745B8259F7CD100AA5CB7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-		7A5745C3259F998200AA5CB7 /* firebaseFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firebaseFunction.swift; sourceTree = "<group>"; };
 		7A5745D0259F9A6300AA5CB7 /* ListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElement.swift; sourceTree = "<group>"; };
 		7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
+		7AA53A2425A1CEC800416348 /* RichDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichDemo.swift; sourceTree = "<group>"; };
+		7AA53A7E25A1F5E700416348 /* firebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firebaseAuth.swift; sourceTree = "<group>"; };
+		7AA53A8125A1F7F400416348 /* firestore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firestore.swift; sourceTree = "<group>"; };
+		7AA53A8525A1FA7900416348 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
 		ADAC5DC3240AC8DA0079EB30 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC5DC6240AC8DA0079EB30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADAC5DC8240AC8DA0079EB30 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +48,8 @@
 		ADAC5DCF240AC8DE0079EB30 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ADAC5DD2240AC8DE0079EB30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADAC5DD4240AC8DE0079EB30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA7275211752EDBBCEE3F78F /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F30053209F6C64BB1A4E2BCB /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +58,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A5745A3259F77F600AA5CB7 /* FacebookCore in Frameworks */,
-				A66EFD8425A04DF900346E6D /* FirebaseAuth in Frameworks */,
 				7A5745A7259F77F600AA5CB7 /* FacebookShare in Frameworks */,
 				7A5745A5259F77F600AA5CB7 /* FacebookLogin in Frameworks */,
 				A66EFDC825A06A0000346E6D /* MDText in Frameworks */,
-				A66EFD8025A04DF900346E6D /* FirebaseInstallations in Frameworks */,
-				A66EFD8225A04DF900346E6D /* FirebaseInAppMessaging-Beta in Frameworks */,
-				A66EFD8625A04DF900346E6D /* FirebaseFirestore in Frameworks */,
+				0B1DD737CC03C5DB32BB7BA4 /* Pods_Notes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +71,8 @@
 		7A574585259F6D4B00AA5CB7 /* firebase */ = {
 			isa = PBXGroup;
 			children = (
-				7A5745C3259F998200AA5CB7 /* firebaseFunction.swift */,
+				7AA53A8125A1F7F400416348 /* firestore.swift */,
+				7AA53A7E25A1F5E700416348 /* firebaseAuth.swift */,
 			);
 			path = firebase;
 			sourceTree = "<group>";
@@ -79,6 +83,8 @@
 				7A5745AF259F7B6F00AA5CB7 /* fbLogin.swift */,
 				7A5745D0259F9A6300AA5CB7 /* ListElement.swift */,
 				7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */,
+				7AA53A2425A1CEC800416348 /* RichDemo.swift */,
+				7AA53A8525A1FA7900416348 /* NoteList.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -91,18 +97,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		A66EFDB325A0590300346E6D /* RichEditorView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RichEditorView;
-			sourceTree = "<group>";
-		};
 		ADAC5DBA240AC8DA0079EB30 = {
 			isa = PBXGroup;
 			children = (
 				ADAC5DC5240AC8DA0079EB30 /* Notes */,
 				ADAC5DC4240AC8DA0079EB30 /* Products */,
+				BF72E1785F0B5043375ACF42 /* Pods */,
+				CE7207620F7AC99F39D66FD9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,7 +118,6 @@
 		ADAC5DC5240AC8DA0079EB30 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				A66EFDB325A0590300346E6D /* RichEditorView */,
 				7A5745B7259F7CAB00AA5CB7 /* Model */,
 				7A5745AE259F7B4B00AA5CB7 /* View */,
 				7A574585259F6D4B00AA5CB7 /* firebase */,
@@ -141,6 +141,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		BF72E1785F0B5043375ACF42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F30053209F6C64BB1A4E2BCB /* Pods-Notes.debug.xcconfig */,
+				5D4E9CB458072990820B10FC /* Pods-Notes.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CE7207620F7AC99F39D66FD9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA7275211752EDBBCEE3F78F /* Pods_Notes.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,9 +165,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADAC5DED240AC8DE0079EB30 /* Build configuration list for PBXNativeTarget "Notes" */;
 			buildPhases = (
+				181D98C5D49012E8453776DD /* [CP] Check Pods Manifest.lock */,
 				ADAC5DBF240AC8DA0079EB30 /* Sources */,
 				ADAC5DC1240AC8DA0079EB30 /* Resources */,
 				ADAC5DC0240AC8DA0079EB30 /* Frameworks */,
+				7985E97A244159AFBAE3ECB6 /* [CP] Embed Pods Frameworks */,
+				AD0970BEE4A67DDFBDA1548B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -161,10 +181,6 @@
 				7A5745A2259F77F600AA5CB7 /* FacebookCore */,
 				7A5745A4259F77F600AA5CB7 /* FacebookLogin */,
 				7A5745A6259F77F600AA5CB7 /* FacebookShare */,
-				A66EFD7F25A04DF900346E6D /* FirebaseInstallations */,
-				A66EFD8125A04DF900346E6D /* FirebaseInAppMessaging-Beta */,
-				A66EFD8325A04DF900346E6D /* FirebaseAuth */,
-				A66EFD8525A04DF900346E6D /* FirebaseFirestore */,
 				A66EFDC725A06A0000346E6D /* MDText */,
 			);
 			productName = Notes;
@@ -197,7 +213,6 @@
 			mainGroup = ADAC5DBA240AC8DA0079EB30;
 			packageReferences = (
 				7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
-				A66EFD7E25A04DF900346E6D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A66EFDC625A06A0000346E6D /* XCRemoteSwiftPackageReference "MDText" */,
 			);
 			productRefGroup = ADAC5DC4240AC8DA0079EB30 /* Products */;
@@ -223,18 +238,80 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		181D98C5D49012E8453776DD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Notes-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7985E97A244159AFBAE3ECB6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD0970BEE4A67DDFBDA1548B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		ADAC5DBF240AC8DA0079EB30 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A5745C4259F998200AA5CB7 /* firebaseFunction.swift in Sources */,
 				7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */,
+				7AA53A7F25A1F5E700416348 /* firebaseAuth.swift in Sources */,
 				ADAC5DC7240AC8DA0079EB30 /* AppDelegate.swift in Sources */,
 				7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */,
+				7AA53A2625A1CEC800416348 /* RichDemo.swift in Sources */,
 				7A5745DB259FAA3400AA5CB7 /* EditNoteView.swift in Sources */,
 				7A5745B0259F7B6F00AA5CB7 /* fbLogin.swift in Sources */,
+				7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */,
 				ADAC5DC9240AC8DA0079EB30 /* SceneDelegate.swift in Sources */,
+				7AA53A8225A1F7F400416348 /* firestore.swift in Sources */,
 				ADAC5DCB240AC8DA0079EB30 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +448,7 @@
 		};
 		ADAC5DEE240AC8DE0079EB30 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F30053209F6C64BB1A4E2BCB /* Pods-Notes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -391,6 +469,7 @@
 		};
 		ADAC5DEF240AC8DE0079EB30 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D4E9CB458072990820B10FC /* Pods-Notes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -441,14 +520,6 @@
 				minimumVersion = 8.2.0;
 			};
 		};
-		A66EFD7E25A04DF900346E6D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.3.1;
-			};
-		};
 		A66EFDC625A06A0000346E6D /* XCRemoteSwiftPackageReference "MDText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Lambdo-Labs/MDText.git";
@@ -474,26 +545,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookShare;
-		};
-		A66EFD7F25A04DF900346E6D /* FirebaseInstallations */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A66EFD7E25A04DF900346E6D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseInstallations;
-		};
-		A66EFD8125A04DF900346E6D /* FirebaseInAppMessaging-Beta */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A66EFD7E25A04DF900346E6D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseInAppMessaging-Beta";
-		};
-		A66EFD8325A04DF900346E6D /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A66EFD7E25A04DF900346E6D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		A66EFD8525A04DF900346E6D /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A66EFD7E25A04DF900346E6D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
 		};
 		A66EFDC725A06A0000346E6D /* MDText */ = {
 			isa = XCSwiftPackageProductDependency;

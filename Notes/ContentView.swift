@@ -15,15 +15,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
 struct Home : View {
     
-    @ObservedObject var Notes = getNotes()
     @State var show = false
     @State var txt = ""
     @State var docID = ""
@@ -32,32 +25,27 @@ struct Home : View {
     var body : some View{
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
-                
                 VStack(spacing: 0){
-                    
                     HStack{
                         Text("Notes").font(.title).foregroundColor(.white)
                         Spacer()
                         Button(action: {
                             self.remove.toggle()
                         }) {
-                            
-                            Image(systemName: self.remove ? "xmark.circle" : "trash").resizable().frame(width: 23, height: 23).foregroundColor(.white)
+                        Image(systemName: self.remove ? "xmark.circle" : "trash").resizable().frame(width: 23, height: 23).foregroundColor(.white)
                         }
-                        
                     }.padding()
                     .padding(.top,UIApplication.shared.windows.first?.safeAreaInsets.top)
                     .background(Color.red)
                     
-                    if self.Notes.data.isEmpty{
-                        if self.Notes.noData{
+                    if (AllNotes.data.isEmpty || AllFolders.data.isEmpty) {
+                        if (AllNotes.noData && AllFolders.noData) {
                             Spacer()
                             Text("No Notes !!!")
                             Spacer()
                         }
                         else{
                             Spacer()
-                            //Data is Loading ....
                             Indicator()
                             Spacer()
                         }
@@ -65,8 +53,13 @@ struct Home : View {
                     else{
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack{
-                                ForEach(self.Notes.data){i in
-                                    ListElement(note: i, isRemovedMode: self.$remove)
+                                NavigationLink(destination: NoteList(notes: AllNotes.data)) {
+                                    Text("All")
+                                }
+                                ForEach(AllFolders.data){i in
+                                    NavigationLink(destination: NoteList(note: AllNotes.getNotesInFolder(folderName: i))) {
+                                        Text(i)
+                                    }
                                 }
                             }
                         }
