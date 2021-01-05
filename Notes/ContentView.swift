@@ -30,16 +30,9 @@ struct Home : View {
             ZStack(alignment: .bottomTrailing) {
                 if (data.notes.isEmpty) {
                     VStack {
-                        if (data.noData) {
-                            Spacer()
-                            Text("No Notes !!!")
-                            Spacer()
-                        }
-                        else{
-                            Spacer()
-                            Indicator()
-                            Spacer()
-                        }
+                        Spacer()
+                        Indicator()
+                        Spacer()
                     }
                 }
                 else {
@@ -78,41 +71,10 @@ struct Home : View {
                         }
                     }
                 }
-                NavigationLink(destination: EditNoteView(note: nil, destination: "All")) {
-                    Image(systemName: "plus").resizable().frame(width: 20, height: 20).foregroundColor(.white).padding()
-                        .background(Color.blue)
-                        .clipShape(Circle())
-                        .padding(15)
-                }
+                
             }
             .navigationBarTitle(Text("Notes"), displayMode: .inline)
-            .navigationBarItems(trailing:
-                                    HStack(spacing: 20) {
-                                        Button(action: {
-                                        self.addFolder.toggle()
-                                            }) {
-                                            if self.addFolder {
-                                                Image(systemName: "xmark").resizable().frame(width: 23, height: 23)
-                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                            } else {
-                                                Image(systemName: "folder.badge.plus").resizable().frame(width: 25, height: 20)
-                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                            }
-                                        }
-                                            
-                                        Button(action: {
-                                        self.editFolders.toggle()
-                                            }) {
-                                            if self.editFolders {
-                                                Image(systemName: "xmark").resizable().frame(width: 23, height: 23)
-                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                            } else {
-                                                Image(systemName: "tray.full").resizable().frame(width: 25, height: 20)
-                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                            }
-                                        }
-                                    }
-                )
+            .navigationBarItems(trailing: PopActionMenu(addFolder: self.$addFolder, editFolders: self.$editFolders))
         }
     }
 }

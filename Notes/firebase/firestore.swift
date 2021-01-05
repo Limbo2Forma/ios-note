@@ -219,7 +219,7 @@ class FirestoreDb : ObservableObject {
     }
     
     func removeNoteInFolder(note: Note, folderName: String) -> Bool{
-        if note.folders.contains(folderName) {
+        if !note.folders.contains(folderName) {
             return false
         }
         

@@ -66,8 +66,9 @@ struct FoldersListElement: View {
                         }) {
                             Image(systemName: "trash")
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 24, height: 20)
                             .foregroundColor(.red)
+                            .font(Font.title.weight(.thin))
                         }
                     }
                 }
