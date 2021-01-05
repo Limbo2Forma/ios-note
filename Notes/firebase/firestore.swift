@@ -8,145 +8,32 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestoreSwift
+import FirebaseFirestore
 
-@ObservedObject var AllNotes = getAllNotes()
-@ObservedObject var AllFolders = getAllFolders()
-
-class getAllNotes : ObservableObject{
+class FirestoreDb : ObservableObject {
     
-    @Published var data = [Note]()
+    @Published var notes = [Note]()
     @Published var noData = false
+    @Published var folders = [String]()
     
-    init() {
-        let fbAuth = Auth.auth()
+//    var uuid = "wfR97S1gZ8f22Kt4VLTt3bfhaQ83"
+    var db: DocumentReference
+    let format = DateFormatter()
+    
+    init(user: User) {
+        self.db = Firestore.firestore().collection("users").document(user.uid)
         
-        fbAuth.addStateDidChangeListener { (auth, user) in
-            if user != nil {
-                uid = user.uid
-                
-                let db = Firestore.firestore()
-                
-                db.collection("notes").whereField("ownerId", isEqualTo: uid).order(by: "date", descending: false).addSnapshotListener { (snap, err) in
-                    
-                    if err != nil {
-                        print((err?.localizedDescription)!)
-                        self.noData = true
-                        return
-                    }
-                    
-                    if (snap?.documentChanges.isEmpty)! {
-                        self.noData = true
-                        return
-                    }
-                    
-                    for i in snap!.documentChanges {
-                        if i.type == .added {
-                            
-                            let id = i.document.documentID
-                            let title = i.document.get("title") as! String
-                            let location = i.document.get("location") as! String
-                            let content = i.document.get("content") as! String
-                            let date = i.document.get("date") as! Timestamp
-                            let ownerId = i.document.get("ownerId") as! String
-                            
-                            let format = DateFormatter()
-                            format.dateFormat = "dd-MM-YY hh:mm a"
-                            let dateString = format.string(from: date.dateValue())
-                            
-                            self.data.append(Note(id: id, ownerId: ownerId, title: title, location: location, content: content, date:dateString))
-                        }
-                        
-                        if i.type == .modified {
-                            let id = i.document.documentID
-                            let title = i.document.get("title") as! String
-                            let location = i.document.get("location") as! String
-                            let content = i.document.get("content") as! String
-                            
-                            for i in 0..<self.data.count {
-                                if self.data[i].id == id {
-                                    self.data[i].title = title
-                                    self.data[i].location = location
-                                    self.data[i].content = content
-                                }
-                            }
-                        }
-                        
-                        if i.type == .removed{
-                            let id = i.document.documentID
-                            
-                            for i in 0..<self.data.count {
-                                if self.data[i].id == id {
-                                    self.data.remove(at: i)
-                                    if self.data.isEmpty{
-                                        self.noData = true
-                                    }
-                                    return
-                                }
-                            }
-                        }
-                    }
-                }
+        self.db.getDocument { (document, error) in
+            if let document = document, !document.exists {
+                self.db.setData([
+                    "email": user.email ?? "none",
+                    "folders": ["All"]
+                ])
             }
         }
-    }
-    
-    func getNotesInFolder(folderName: String) -> [Note]{
-        var notes = [Note]()
-        for i in data {
-            if i.location = folderName {
-                notes.append(i)
-            }
-        }
-        return notes
-    }
-}
-
-func SaveNote(note: Note){
-    
-    let db = Firestore.firestore()
-    
-    if note.id != ""{
-        db.collection("notes").document(note.id).updateData([
-            "ownerId": note.ownerId,
-            "title": note.title,
-            "location": note.location,
-            "content": note.content,
-            "date": note.date
-        ]) { (err) in
-            
-            if err != nil{
-                
-                print((err?.localizedDescription)!)
-                return
-            }
-        }
-    }
-    else{
-        db.collection("notes").document().setData([
-            "ownerId": note.ownerId,
-            "title": note.title,
-            "location": note.location,
-            "content": note.content,
-            "date": note.date
-        ]) { (err) in
-            if err != nil{
-                print((err?.localizedDescription)!)
-                return
-            }
-        }
-    }
-}
-
-class getAllFolders : ObservableObject{
-    
-    @Published var data = [String]()
-    @Published var noData = false
-    
-    init(authId: String) {
         
-        let db = Firestore.firestore()
-        
-        db.collection("users").document(authId).addSnapshotListener { (snap, err) in
+        self.db.collection("notes").order(by: "date", descending: false).addSnapshotListener { (snap, err) in
             
             if err != nil {
                 print((err?.localizedDescription)!)
@@ -160,46 +47,216 @@ class getAllFolders : ObservableObject{
             }
             
             for i in snap!.documentChanges {
-                if i.type == .modified {
+                if i.type == .added {
+                    
+                    let id = i.document.documentID
+                    let title = i.document.get("title") as! String
                     let folders = i.document.get("folders") as! [String]
-                    data = folders
+                    let content = i.document.get("content") as! String
+                    let date = i.document.get("date") as! Timestamp
+                    
+                    self.format.dateFormat = "dd-MM-YY hh:mm a"
+                    let dateString = self.format.string(from: date.dateValue())
+                    
+                    let newNote = Note(id: id, title: title, folders: folders, content: content, date:dateString)
+                    self.notes.append(newNote)
+                }
+                
+                if i.type == .modified {
+                    let id = i.document.documentID
+                    let title = i.document.get("title") as! String
+                    let folders = i.document.get("folder") as! [String]
+                    let content = i.document.get("content") as! String
+                    
+                    for i in 0..<self.notes.count {
+                        if self.notes[i].id == id {
+                            self.notes[i].title = title
+                            self.notes[i].folders = folders
+                            self.notes[i].content = content
+                        }
+                    }
+                }
+                
+                if i.type == .removed{
+                    let id = i.document.documentID
+                    
+                    for i in 0..<self.notes.count {
+                        if self.notes[i].id == id {
+                            self.notes.remove(at: i)
+                            if self.notes.isEmpty{
+                                self.noData = true
+                            }
+                            return
+                        }
+                    }
+                }
+            }
+            print(self.notes)
+        }
+        
+        self.db.addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                let fd = document.get("folders")
+                if fd != nil {
+                    self.folders = fd as! [String]
+                }
+                print(self.notes)
+            }
+    }
+    
+    func getFolders() -> [String] {
+        return folders
+    }
+    
+    func getNotes() -> [Note] {
+        return notes
+    }
+    
+    func isNoData() -> Bool {
+        return noData
+    }
+    
+    func getNotesInFolder(folderName: String) -> [Note] {
+        return notes.filter { n in
+            return n.folders.contains(folderName)
+        }
+    }
+    
+    func addFolder(folderName: String) -> Bool {
+        if self.folders.contains(folderName) {
+            return false
+        }
+        self.folders.append(folderName)
+        self.db.updateData([
+            "folders": folders
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+        return true
+    }
+    
+    func removeFolder(folderName: String) {
+        let batch = Firestore.firestore().batch()
+        
+        for i in self.notes {
+            if i.folders.contains(folderName) {
+                batch.updateData([
+                    "folders": i.folders.filter{ n in n != folderName }
+                ], forDocument: db.collection("notes").document(i.id))
+            }
+        }
+        
+        batch.updateData([
+            "folders": self.folders.filter{ n in n != folderName }
+        ], forDocument: db)
+        
+        batch.commit() { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+    }
+    
+    func renameFolder(oldName: String, newName: String) -> Bool {
+        if self.folders.contains(newName) {
+            return true
+        }
+        
+        let batch = Firestore.firestore().batch()
+        
+        for i in self.notes {
+            if let index = i.folders.firstIndex(of: oldName) {
+                var newFolders = i.folders
+                newFolders[index] = newName
+                
+                batch.updateData([
+                    "folders": newFolders
+                ], forDocument: db.collection("notes").document(i.id))
+            }
+        }
+        
+        if let index = self.folders.firstIndex(of: oldName) {
+            var newFolders = self.folders
+            newFolders[index] = newName
+            
+            batch.updateData([
+                "folders": newFolders
+            ], forDocument: db)
+        }
+        
+        batch.commit() { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+        return false
+    }
+    
+    func addNoteInFolder(note: Note, folderName: String) -> Bool{
+        if note.folders.contains(folderName) {
+            return false
+        }
+        var noteph = note
+        noteph.folders.append(folderName)
+        
+        self.db.collection("notes").document(note.id).updateData([
+            "folders": noteph
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+        return true
+    }
+    
+    func removeNoteInFolder(note: Note, folderName: String) -> Bool{
+        if note.folders.contains(folderName) {
+            return false
+        }
+        
+        self.db.collection("notes").document(note.id).updateData([
+            "folders": note.folders.filter{ n in n != folderName }
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+        return true
+    }
+    
+    func saveNote(note: Note) {
+        if note.id != "" {
+            self.db.collection("notes").document(note.id).updateData([
+                "title": note.title,
+                "content": note.content
+            ]) { (err) in
+                if err != nil{
+                    print((err?.localizedDescription)!)
+                    return
                 }
             }
         }
-    }
-}
-
-func SaveFolder(folder: String){
-    
-    let db = Firestore.firestore()
-    
-    if note.id != ""{
-        db.collection("notes").document(note.id).updateData([
-            "ownerId": note.ownerId,
-            "title": note.title,
-            "location": note.location,
-            "content": note.content,
-            "date": note.date
-        ]) { (err) in
-            
-            if err != nil{
-                
-                print((err?.localizedDescription)!)
-                return
-            }
-        }
-    }
-    else{
-        db.collection("notes").document().setData([
-            "ownerId": note.ownerId,
-            "title": note.title,
-            "location": note.location,
-            "content": note.content,
-            "date": note.date
-        ]) { (err) in
-            if err != nil{
-                print((err?.localizedDescription)!)
-                return
+        else {
+            db.collection("notes").document().setData([
+                "title": note.title,
+                "folder": ["All"],
+                "content": note.content,
+                "date": note.date
+            ]) { (err) in
+                if err != nil{
+                    print((err?.localizedDescription)!)
+                    return
+                }
             }
         }
     }

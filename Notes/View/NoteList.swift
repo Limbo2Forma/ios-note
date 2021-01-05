@@ -9,38 +9,35 @@
 import SwiftUI
 
 struct NoteList: View {
-    var notes
+    var notes: [Note]
+    var title: String
     @State var removeMode = false
     
     var body: some View {
-        VStack(spacing: 0){
-            HStack{
-                Text("Notes").font(.title).foregroundColor(.white)
-                Spacer()
-                Button(action: {
-                    self.removeMode.toggle()
-                }) {
-                Image(systemName: self.removeMode ? "xmark.circle" : "trash").resizable().frame(width: 23, height: 23).foregroundColor(.white)
-                }
-            }.padding()
-            .padding(.top,UIApplication.shared.windows.first?.safeAreaInsets.top)
-            .background(Color.red)
-            
+        ZStack(alignment: .bottomTrailing) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack{
-                    ForEach(AllFolders.data){i in
-                        NavigationLink(destination: NoteList(note: i)) {
-                            ListElement(note: i, isRemovedMode: removeMode)
+                    ForEach(notes) { i in
+                        NavigationLink(destination: EditNoteView(note: i, destination: title)) {
+                            ListElement(note: i, isRemovedMode: $removeMode)
                         }
                     }
                 }
             }
-        }.edgesIgnoringSafeArea(.top)
-    }
-}
-
-struct NoteList_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteList()
+            .navigationBarTitle(Text(title), displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(action: {
+                self.removeMode.toggle()
+                    }) {
+                    Image(systemName: self.removeMode ? "xmark.circle" : "trash").resizable().frame(width: 23, height: 23).foregroundColor(.white)
+                    }
+                )
+            NavigationLink(destination: EditNoteView(note: nil, destination: title)) {
+                Image(systemName: "plus").resizable().frame(width: 19, height: 19).foregroundColor(.white).padding()
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .padding(15)
+            }
+        }
     }
 }

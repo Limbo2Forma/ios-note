@@ -7,20 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B1DD737CC03C5DB32BB7BA4 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7275211752EDBBCEE3F78F /* Pods_Notes.framework */; };
+		3BA42E4EDDFD2D041D700904 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F86FB09E0F8CB5DAF9C343E /* Pods_Notes.framework */; };
 		7A57457E259F6CFC00AA5CB7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A57457D259F6CFC00AA5CB7 /* GoogleService-Info.plist */; };
-		7A5745A3259F77F600AA5CB7 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5745A2259F77F600AA5CB7 /* FacebookCore */; };
-		7A5745A5259F77F600AA5CB7 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5745A4259F77F600AA5CB7 /* FacebookLogin */; };
-		7A5745A7259F77F600AA5CB7 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5745A6259F77F600AA5CB7 /* FacebookShare */; };
-		7A5745B0259F7B6F00AA5CB7 /* fbLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745AF259F7B6F00AA5CB7 /* fbLogin.swift */; };
 		7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745B8259F7CD100AA5CB7 /* Note.swift */; };
 		7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745D0259F9A6300AA5CB7 /* ListElement.swift */; };
 		7A5745DB259FAA3400AA5CB7 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */; };
-		7AA53A2625A1CEC800416348 /* RichDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A2425A1CEC800416348 /* RichDemo.swift */; };
-		7AA53A7F25A1F5E700416348 /* firebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A7E25A1F5E700416348 /* firebaseAuth.swift */; };
+		7A65C0C825A34F2900D03125 /* FoldersListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A65C0C725A34F2900D03125 /* FoldersListElement.swift */; };
 		7AA53A8225A1F7F400416348 /* firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8125A1F7F400416348 /* firestore.swift */; };
 		7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8525A1FA7900416348 /* NoteList.swift */; };
-		A66EFDC825A06A0000346E6D /* MDText in Frameworks */ = {isa = PBXBuildFile; productRef = A66EFDC725A06A0000346E6D /* MDText */; };
+		7AC9227E25A2F0FB002919B7 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7AC9227D25A2F0FB002919B7 /* FacebookCore */; };
+		7AC9228025A2F0FB002919B7 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 7AC9227F25A2F0FB002919B7 /* FacebookShare */; };
+		7AC9228425A31E38002919B7 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC9228325A31E38002919B7 /* util.swift */; };
+		7AF7694925A36ED40089C0D7 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF7694825A36ED40089C0D7 /* Login.swift */; };
 		ADAC5DC7240AC8DA0079EB30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DC6240AC8DA0079EB30 /* AppDelegate.swift */; };
 		ADAC5DC9240AC8DA0079EB30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DC8240AC8DA0079EB30 /* SceneDelegate.swift */; };
 		ADAC5DCB240AC8DA0079EB30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DCA240AC8DA0079EB30 /* ContentView.swift */; };
@@ -30,16 +28,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5D4E9CB458072990820B10FC /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
+		51AB56C3271C61130FA074D0 /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
 		7A57457D259F6CFC00AA5CB7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		7A5745AF259F7B6F00AA5CB7 /* fbLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fbLogin.swift; sourceTree = "<group>"; };
 		7A5745B8259F7CD100AA5CB7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		7A5745D0259F9A6300AA5CB7 /* ListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElement.swift; sourceTree = "<group>"; };
 		7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
-		7AA53A2425A1CEC800416348 /* RichDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichDemo.swift; sourceTree = "<group>"; };
-		7AA53A7E25A1F5E700416348 /* firebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firebaseAuth.swift; sourceTree = "<group>"; };
+		7A65C0C725A34F2900D03125 /* FoldersListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersListElement.swift; sourceTree = "<group>"; };
 		7AA53A8125A1F7F400416348 /* firestore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firestore.swift; sourceTree = "<group>"; };
 		7AA53A8525A1FA7900416348 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
+		7AC9228325A31E38002919B7 /* util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
+		7AF7694825A36ED40089C0D7 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		9F86FB09E0F8CB5DAF9C343E /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC5DC3240AC8DA0079EB30 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC5DC6240AC8DA0079EB30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADAC5DC8240AC8DA0079EB30 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,8 +47,7 @@
 		ADAC5DCF240AC8DE0079EB30 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ADAC5DD2240AC8DE0079EB30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADAC5DD4240AC8DE0079EB30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA7275211752EDBBCEE3F78F /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F30053209F6C64BB1A4E2BCB /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
+		BC5A8C0EF068FB34E18DEE68 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,22 +55,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A5745A3259F77F600AA5CB7 /* FacebookCore in Frameworks */,
-				7A5745A7259F77F600AA5CB7 /* FacebookShare in Frameworks */,
-				7A5745A5259F77F600AA5CB7 /* FacebookLogin in Frameworks */,
-				A66EFDC825A06A0000346E6D /* MDText in Frameworks */,
-				0B1DD737CC03C5DB32BB7BA4 /* Pods_Notes.framework in Frameworks */,
+				7AC9228025A2F0FB002919B7 /* FacebookShare in Frameworks */,
+				7AC9227E25A2F0FB002919B7 /* FacebookCore in Frameworks */,
+				3BA42E4EDDFD2D041D700904 /* Pods_Notes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00C9F83F2753E21853A9D5E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F86FB09E0F8CB5DAF9C343E /* Pods_Notes.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7A574585259F6D4B00AA5CB7 /* firebase */ = {
 			isa = PBXGroup;
 			children = (
 				7AA53A8125A1F7F400416348 /* firestore.swift */,
-				7AA53A7E25A1F5E700416348 /* firebaseAuth.swift */,
 			);
 			path = firebase;
 			sourceTree = "<group>";
@@ -80,11 +83,12 @@
 		7A5745AE259F7B4B00AA5CB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7A5745AF259F7B6F00AA5CB7 /* fbLogin.swift */,
 				7A5745D0259F9A6300AA5CB7 /* ListElement.swift */,
 				7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */,
-				7AA53A2425A1CEC800416348 /* RichDemo.swift */,
 				7AA53A8525A1FA7900416348 /* NoteList.swift */,
+				7AC9228325A31E38002919B7 /* util.swift */,
+				7A65C0C725A34F2900D03125 /* FoldersListElement.swift */,
+				7AF7694825A36ED40089C0D7 /* Login.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -103,7 +107,7 @@
 				ADAC5DC5240AC8DA0079EB30 /* Notes */,
 				ADAC5DC4240AC8DA0079EB30 /* Products */,
 				BF72E1785F0B5043375ACF42 /* Pods */,
-				CE7207620F7AC99F39D66FD9 /* Frameworks */,
+				00C9F83F2753E21853A9D5E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,18 +148,10 @@
 		BF72E1785F0B5043375ACF42 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F30053209F6C64BB1A4E2BCB /* Pods-Notes.debug.xcconfig */,
-				5D4E9CB458072990820B10FC /* Pods-Notes.release.xcconfig */,
+				BC5A8C0EF068FB34E18DEE68 /* Pods-Notes.debug.xcconfig */,
+				51AB56C3271C61130FA074D0 /* Pods-Notes.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		CE7207620F7AC99F39D66FD9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EA7275211752EDBBCEE3F78F /* Pods_Notes.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,12 +161,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADAC5DED240AC8DE0079EB30 /* Build configuration list for PBXNativeTarget "Notes" */;
 			buildPhases = (
-				181D98C5D49012E8453776DD /* [CP] Check Pods Manifest.lock */,
+				62C23D8B8E4F510D669694F7 /* [CP] Check Pods Manifest.lock */,
 				ADAC5DBF240AC8DA0079EB30 /* Sources */,
 				ADAC5DC1240AC8DA0079EB30 /* Resources */,
 				ADAC5DC0240AC8DA0079EB30 /* Frameworks */,
-				7985E97A244159AFBAE3ECB6 /* [CP] Embed Pods Frameworks */,
-				AD0970BEE4A67DDFBDA1548B /* [CP] Copy Pods Resources */,
+				46BD98CAAF1485A2EB619DEF /* [CP] Embed Pods Frameworks */,
+				950C54332878C3FA5B34934F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -178,10 +174,8 @@
 			);
 			name = Notes;
 			packageProductDependencies = (
-				7A5745A2259F77F600AA5CB7 /* FacebookCore */,
-				7A5745A4259F77F600AA5CB7 /* FacebookLogin */,
-				7A5745A6259F77F600AA5CB7 /* FacebookShare */,
-				A66EFDC725A06A0000346E6D /* MDText */,
+				7AC9227D25A2F0FB002919B7 /* FacebookCore */,
+				7AC9227F25A2F0FB002919B7 /* FacebookShare */,
 			);
 			productName = Notes;
 			productReference = ADAC5DC3240AC8DA0079EB30 /* Notes.app */;
@@ -212,8 +206,7 @@
 			);
 			mainGroup = ADAC5DBA240AC8DA0079EB30;
 			packageReferences = (
-				7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
-				A66EFDC625A06A0000346E6D /* XCRemoteSwiftPackageReference "MDText" */,
+				7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = ADAC5DC4240AC8DA0079EB30 /* Products */;
 			projectDirPath = "";
@@ -239,7 +232,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		181D98C5D49012E8453776DD /* [CP] Check Pods Manifest.lock */ = {
+		46BD98CAAF1485A2EB619DEF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		62C23D8B8E4F510D669694F7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -261,24 +271,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7985E97A244159AFBAE3ECB6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Notes/Pods-Notes-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD0970BEE4A67DDFBDA1548B /* [CP] Copy Pods Resources */ = {
+		950C54332878C3FA5B34934F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -303,14 +296,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */,
-				7AA53A7F25A1F5E700416348 /* firebaseAuth.swift in Sources */,
+				7AF7694925A36ED40089C0D7 /* Login.swift in Sources */,
 				ADAC5DC7240AC8DA0079EB30 /* AppDelegate.swift in Sources */,
+				7AC9228425A31E38002919B7 /* util.swift in Sources */,
 				7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */,
-				7AA53A2625A1CEC800416348 /* RichDemo.swift in Sources */,
 				7A5745DB259FAA3400AA5CB7 /* EditNoteView.swift in Sources */,
-				7A5745B0259F7B6F00AA5CB7 /* fbLogin.swift in Sources */,
 				7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */,
 				ADAC5DC9240AC8DA0079EB30 /* SceneDelegate.swift in Sources */,
+				7A65C0C825A34F2900D03125 /* FoldersListElement.swift in Sources */,
 				7AA53A8225A1F7F400416348 /* firestore.swift in Sources */,
 				ADAC5DCB240AC8DA0079EB30 /* ContentView.swift in Sources */,
 			);
@@ -448,7 +441,7 @@
 		};
 		ADAC5DEE240AC8DE0079EB30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F30053209F6C64BB1A4E2BCB /* Pods-Notes.debug.xcconfig */;
+			baseConfigurationReference = BC5A8C0EF068FB34E18DEE68 /* Pods-Notes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -469,7 +462,7 @@
 		};
 		ADAC5DEF240AC8DE0079EB30 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D4E9CB458072990820B10FC /* Pods-Notes.release.xcconfig */;
+			baseConfigurationReference = 51AB56C3271C61130FA074D0 /* Pods-Notes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -512,7 +505,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+		7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
 			requirement = {
@@ -520,36 +513,18 @@
 				minimumVersion = 8.2.0;
 			};
 		};
-		A66EFDC625A06A0000346E6D /* XCRemoteSwiftPackageReference "MDText" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Lambdo-Labs/MDText.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.10;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7A5745A2259F77F600AA5CB7 /* FacebookCore */ = {
+		7AC9227D25A2F0FB002919B7 /* FacebookCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			package = 7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookCore;
 		};
-		7A5745A4259F77F600AA5CB7 /* FacebookLogin */ = {
+		7AC9227F25A2F0FB002919B7 /* FacebookShare */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookLogin;
-		};
-		7A5745A6259F77F600AA5CB7 /* FacebookShare */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7A5745A1259F77F600AA5CB7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			package = 7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
 			productName = FacebookShare;
-		};
-		A66EFDC725A06A0000346E6D /* MDText */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A66EFDC625A06A0000346E6D /* XCRemoteSwiftPackageReference "MDText" */;
-			productName = MDText;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

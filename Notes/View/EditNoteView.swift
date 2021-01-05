@@ -1,10 +1,11 @@
 import SwiftUI
 import Firebase
-import MDText
 
 struct EditNoteView : View {
     
     var note: Note?
+    var destination: String
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var title = ""
     @State private var content = ""

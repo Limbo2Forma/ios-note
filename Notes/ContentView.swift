@@ -17,29 +17,20 @@ struct ContentView: View {
 
 struct Home : View {
     
-    @State var show = false
-    @State var txt = ""
-    @State var docID = ""
-    @State var remove = false
+    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var data: FirestoreDb
     
-    var body : some View{
+    @State private var newFolder = ""
+    @State var editFolders = false
+    @State var addFolder = false
+    @State private var showAddFolderError = false
+    
+    var body : some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
-                VStack(spacing: 0){
-                    HStack{
-                        Text("Notes").font(.title).foregroundColor(.white)
-                        Spacer()
-                        Button(action: {
-                            self.remove.toggle()
-                        }) {
-                        Image(systemName: self.remove ? "xmark.circle" : "trash").resizable().frame(width: 23, height: 23).foregroundColor(.white)
-                        }
-                    }.padding()
-                    .padding(.top,UIApplication.shared.windows.first?.safeAreaInsets.top)
-                    .background(Color.red)
-                    
-                    if (AllNotes.data.isEmpty || AllFolders.data.isEmpty) {
-                        if (AllNotes.noData && AllFolders.noData) {
+                if (data.notes.isEmpty) {
+                    VStack {
+                        if (data.noData) {
                             Spacer()
                             Text("No Notes !!!")
                             Spacer()
@@ -50,57 +41,78 @@ struct Home : View {
                             Spacer()
                         }
                     }
-                    else{
-                        ScrollView(.vertical, showsIndicators: false) {
-                            VStack{
-                                NavigationLink(destination: NoteList(notes: AllNotes.data)) {
-                                    Text("All")
-                                }
-                                ForEach(AllFolders.data){i in
-                                    NavigationLink(destination: NoteList(note: AllNotes.getNotesInFolder(folderName: i))) {
-                                        Text(i)
+                }
+                else {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing:0) {
+                            if (self.addFolder) {
+                                VStack {
+                                    Divider()
+                                        .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                    HStack {
+                                        TextField("New Folder name", text: $newFolder,
+                                            onCommit: {
+                                                if data.addFolder(folderName: newFolder) {
+                                                    self.addFolder.toggle()
+                                                    self.newFolder = ""
+                                                } else {
+                                                    self.showAddFolderError = true
+                                                }
+                                            }
+                                        )
+                                        .padding(10)
+                                        .alert(isPresented: $showAddFolderError) {
+                                                    Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
+                                                }
+                                        Spacer()
                                     }
+                                    .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                    Divider()
+                                        .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
                                 }
+                                .background(Color.gray.opacity(0.3))
+                            }
+                            ForEach(data.getFolders(), id: \.self) { i in
+                                FoldersListElement(notes: data.getNotesInFolder(folderName: i), fName: i, isEdit: self.$editFolders)
                             }
                         }
                     }
-                }.edgesIgnoringSafeArea(.top)
-                NavigationLink(destination: EditNoteView(note: nil)) {
-                    Image(systemName: "plus").resizable().frame(width: 18, height: 18).foregroundColor(.white).padding()
-                        .background(Color.red)
+                }
+                NavigationLink(destination: EditNoteView(note: nil, destination: "All")) {
+                    Image(systemName: "plus").resizable().frame(width: 20, height: 20).foregroundColor(.white).padding()
+                        .background(Color.blue)
                         .clipShape(Circle())
-                        .padding()
+                        .padding(15)
                 }
             }
-            .animation(.default)
+            .navigationBarTitle(Text("Notes"), displayMode: .inline)
+            .navigationBarItems(trailing:
+                                    HStack(spacing: 20) {
+                                        Button(action: {
+                                        self.addFolder.toggle()
+                                            }) {
+                                            if self.addFolder {
+                                                Image(systemName: "xmark").resizable().frame(width: 23, height: 23)
+                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                            } else {
+                                                Image(systemName: "folder.badge.plus").resizable().frame(width: 25, height: 20)
+                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                            }
+                                        }
+                                            
+                                        Button(action: {
+                                        self.editFolders.toggle()
+                                            }) {
+                                            if self.editFolders {
+                                                Image(systemName: "xmark").resizable().frame(width: 23, height: 23)
+                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                            } else {
+                                                Image(systemName: "tray.full").resizable().frame(width: 25, height: 20)
+                                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                            }
+                                        }
+                                    }
+                )
         }
-    }
-}
-
-extension View {
-    func Print(_ vars: Any...) -> some View {
-        for v in vars { print(v) }
-        return EmptyView()
-    }
-}
-
-class Host : UIHostingController<ContentView>{
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle{
-        
-        return .lightContent
-    }
-}
-
-struct Indicator : UIViewRepresentable {
-    
-    func makeUIView(context: UIViewRepresentableContext<Indicator>) -> UIActivityIndicatorView {
-        
-        let view = UIActivityIndicatorView(style: .medium)
-        view.startAnimating()
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<Indicator>) {
     }
 }

@@ -12,16 +12,26 @@ import Firebase
 struct ListElement: View {
     var note: Note;
     @Binding var isRemovedMode: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        HStack(spacing: 15){
-            VStack(alignment: .leading, spacing: 12){
-                Text(note.title)
-                Text(note.content).lineLimit(1)
-                Text(note.date).lineLimit(1)
+        HStack(spacing: 15) {
+            VStack(alignment: .leading){
                 Divider()
-            }.padding(10)
-            .foregroundColor(.black)
+                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                HStack {
+                    Text(note.title).fontWeight(.bold).accentColor(self.colorScheme == .dark ? Color.white : Color.black).font(.system(size: 30)).padding(.horizontal, 10).padding(.top, 5)
+                    Spacer()
+                }
+                HStack {
+                    Text(note.date).lineLimit(1).accentColor(self.colorScheme == .dark ? Color.white : Color.black).padding(.horizontal, 10).padding(.bottom, 5)
+                    Spacer()
+                }
+                .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
+                Divider()
+                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+            }
+            .background(Color.gray.opacity(0.3))
             
             if isRemovedMode {
                 Button(action: {
@@ -35,7 +45,6 @@ struct ListElement: View {
                     .foregroundColor(.red)
                 }
             }
-
-        }.padding(.horizontal)
+        }
     }
 }

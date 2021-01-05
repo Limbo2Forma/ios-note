@@ -1,27 +1,70 @@
-//
-//  firebaseAuth.swift
-//  Notes
-//
-//  Created by A friend on 1/3/21.
-//  Copyright © 2021 Balaji. All rights reserved.
-//
-
 import SwiftUI
 import Firebase
+import Combine
 
-class getCurrentUser : ObservableObject{
+class SessionStore : ObservableObject {
+    var didChange = PassthroughSubject<SessionStore, Never>()
+    var sessionId: String? { didSet { self.didChange.send(self) }}
+    var handle: AuthStateDidChangeListenerHandle?
     
-    @Published var uuid=""
-    @Published var notSignedIn = false
+    let db = Firestore.firestore().collection("users")
     
-    init() {
-        
-        let fbAuth = Auth.auth()
-        
-        fbAuth.addStateDidChangeListener { (auth, user) in
-            if user != nil {
-                self.uuid = user.uid
+    func listen () {
+        // monitor authentication changes using firebase
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            if let user = user {
+                // if we have a user, create a new user model
+                print("Got user: \(user)")
+                self.sessionId = user.uid
+                
+                self.db.document(user.uid).getDocument { (document, error) in
+                    if let document = document, !document.exists {
+                        self.db.document(user.uid).setData([
+                            "email": user.email!,
+                            "folders": []]
+                        )
+                    }
+                }
+            } else {
+                // if we don't have a user, set our session to nil
+                self.sessionId = nil
             }
+        }
+    }
+
+    func signUp(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) {
+            authResult, error in
+                if let userRes = authResult?.user {
+                    self.db.document(userRes.uid).setData([
+                        "email": userRes.email!,
+                        "folders": []]
+                    )
+                }
+        }
+    }
+    
+    func signIn(email: String, password: String, handler: @escaping AuthDataResultCallback) {
+        Auth.auth().signIn(withEmail: email, password: password, completion: handler)
+    }
+    
+//    func signInFacebook() {
+//        Auth.auth().sign
+//    }
+
+    func signOut () -> Bool {
+        do {
+            try Auth.auth().signOut()
+            self.sessionId = nil
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    func unbind () {
+        if let handle = handle {
+            Auth.auth().removeStateDidChangeListener(handle)
         }
     }
 }

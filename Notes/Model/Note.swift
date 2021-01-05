@@ -9,11 +9,9 @@
 import Foundation
 
 struct Note : Identifiable, Codable {
-    
     var id : String
-    var ownerId: String
     var title : String
-    var location: String
-    var content: String
+    var folders : [String]
+    var content : String
     var date : String
 }

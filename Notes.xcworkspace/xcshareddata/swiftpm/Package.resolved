@@ -9,15 +9,6 @@
           "revision": "fa5fab33bb440eed75122459965b82c7b944d9d8",
           "version": "8.2.0"
         }
-      },
-      {
-        "package": "MDText",
-        "repositoryURL": "https://github.com/Lambdo-Labs/MDText.git",
-        "state": {
-          "branch": null,
-          "revision": "7b1f74239e4b41799a36b404ff30e21fca6fb9d7",
-          "version": "0.0.10"
-        }
       }
     ]
   },
