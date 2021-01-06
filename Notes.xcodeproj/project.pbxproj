@@ -107,6 +107,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		7ABFEC1525A567A70029B942 /* RichTextView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RichTextView;
+			sourceTree = "<group>";
+		};
 		ADAC5DBA240AC8DA0079EB30 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +135,7 @@
 		ADAC5DC5240AC8DA0079EB30 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				7ABFEC1525A567A70029B942 /* RichTextView */,
 				7A5745B7259F7CAB00AA5CB7 /* Model */,
 				7A5745AE259F7B4B00AA5CB7 /* View */,
 				7A574585259F6D4B00AA5CB7 /* firebase */,

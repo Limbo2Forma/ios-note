@@ -20,9 +20,7 @@ struct EditNoteView : View {
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {
-                
                 Text("Save").padding(.vertical).padding(.horizontal,25).foregroundColor(.white)
-                
             }.background(Color.red)
             .clipShape(Capsule())
             .padding()
