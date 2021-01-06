@@ -141,6 +141,17 @@ class FirestoreDb : ObservableObject {
         return true
     }
     
+    func rearrangeFolder(folders: [String]) {
+        self.db.updateData([
+            "folders": folders
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+    }
+    
     func removeFolder(folderName: String) {
         let batch = Firestore.firestore().batch()
         
@@ -165,8 +176,12 @@ class FirestoreDb : ObservableObject {
     }
     
     func renameFolder(oldName: String, newName: String) -> Bool {
-        if self.folders.contains(newName) {
+        if self.folders.contains(newName) && oldName != newName {
             return true
+        }
+        
+        if oldName == newName {
+            return false
         }
         
         let batch = Firestore.firestore().batch()

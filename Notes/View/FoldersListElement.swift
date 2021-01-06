@@ -10,81 +10,55 @@ import SwiftUI
 
 struct FoldersListElement: View {
     
-    @Binding var isEdit: Bool
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb
     
     @State private var folderNameEdited: String
-    @State private var showDeleteConfirm = false
     @State private var showDuplicateAlert = false
+    @State private var onTextEdit = false
     
     var notes = [Note]()
     var folderName: String
     
-    init(notes: [Note], fName: String, isEdit: Binding<Bool>) {
+    init(notes: [Note], fName: String) {
         self.notes = notes
         self.folderName = fName
         self._folderNameEdited = State(wrappedValue: fName)
-        self._isEdit = isEdit
     }
     
     var body: some View {
-        if (!isEdit || folderName == "All") {
+        if (!onTextEdit || folderName == "All") {
             NavigationLink(destination: NoteList(notes: notes, title: folderName)) {
-                VStack {
-                    Divider()
-                        .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                    HStack {
-                        Text(folderName).padding(10)
-                        Spacer()
-                    }
-                    .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
-                    Divider()
-                        .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                HStack(spacing: 10) {
+                    Image(systemName: "folder")
+                    .resizable()
+                    .frame(width: 24, height: 20)
+                    .font(Font.title.weight(.thin))
+                    Text(folderName).padding(10)
                 }
-                .background(Color.gray.opacity(0.3))
+                .onLongPressGesture {
+                    self.onTextEdit = true
+                }
             }
         } else {
-            VStack {
-                Divider()
-                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                HStack {
-                    TextField("Folder Name",
-                              text: $folderNameEdited,
-                              onCommit: {
-                                self.showDuplicateAlert =  data.renameFolder(oldName: folderName, newName: folderNameEdited)
-                              }
-                    )
-                    .padding(10)
-                    .alert(isPresented: $showDuplicateAlert) {
-                        Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
-                        }
-                    Spacer()
-                    if isEdit {
-                        Button(action: {
-                            self.showDeleteConfirm.toggle()
-                        }) {
-                            Image(systemName: "trash")
-                            .resizable()
-                            .frame(width: 24, height: 20)
-                            .foregroundColor(.red)
-                            .font(Font.title.weight(.thin))
-                        }
+            HStack {
+                Image(systemName: "folder")
+                .resizable()
+                .frame(width: 24, height: 20)
+                .font(Font.title.weight(.thin))
+                TextField("Folder Name",
+                          text: $folderNameEdited,
+                          onCommit: {
+                            self.showDuplicateAlert =  data.renameFolder(oldName: folderName, newName: folderNameEdited)
+                            self.onTextEdit = false
+                          }
+                )
+                .padding(10)
+                .alert(isPresented: $showDuplicateAlert) {
+                    Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
                     }
-                }
-                .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
-                Divider()
-                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                Spacer()
             }
-            .padding(.trailing, 10)
-            .background(Color.gray.opacity(0.3))
-            .alert(isPresented: $showDeleteConfirm) {
-                Alert(title: Text("Are you sure you want to delete this?"), message: Text("There is no undo"),
-                    primaryButton: .destructive(Text("Delete")) {
-                        data.removeFolder(folderName: folderName)
-                    },
-                    secondaryButton: .cancel())
-                }
         }
     }
 }

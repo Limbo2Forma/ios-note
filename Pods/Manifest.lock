@@ -378,6 +378,7 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
+  - RichEditorView (5.1)
   - SDWebImage (5.10.2):
     - SDWebImage/Core (= 5.10.2)
   - SDWebImage/Core (5.10.2)
@@ -387,6 +388,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - FirebaseFirestoreSwift
   - FirebaseUI
+  - RichEditorView (from `https://github.com/cbess/RichEditorView.git`)
 
 SPEC REPOS:
   trunk:
@@ -416,6 +418,15 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
 
+EXTERNAL SOURCES:
+  RichEditorView:
+    :git: https://github.com/cbess/RichEditorView.git
+
+CHECKOUT OPTIONS:
+  RichEditorView:
+    :commit: 5b337858aa0253a457a1f814a1d64b619c24a9f8
+    :git: https://github.com/cbess/RichEditorView.git
+
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
@@ -441,8 +452,9 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  RichEditorView: 2aac47416da9ce045349f1d5e22092a8a3c73f6e
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
 
-PODFILE CHECKSUM: d160a69bebd121b0a4b82f1848644e8fa64b0f73
+PODFILE CHECKSUM: 5cb972110e6927a47c84f81755ae8b94d7526a0e
 
 COCOAPODS: 1.10.0

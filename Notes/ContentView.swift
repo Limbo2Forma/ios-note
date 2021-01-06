@@ -9,21 +9,17 @@
 import SwiftUI
 import Firebase
 
-struct ContentView: View {
-    var body: some View {
-        Home()
-    }
-}
-
 struct Home : View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb
     
     @State private var newFolder = ""
-    @State var editFolders = false
-    @State var addFolder = false
+    @State private var editMode = EditMode.inactive
     @State private var showAddFolderError = false
+    @State private var showDeleteConfirm = false
+    
+    @State var deleteFolderName = ""
     
     var body : some View {
         NavigationView {
@@ -34,46 +30,54 @@ struct Home : View {
                     Spacer()
                 }
                 .navigationBarTitle(Text("Notes"), displayMode: .inline)
-                .navigationBarItems(trailing: PopActionMenu(addFolder: self.$addFolder, editFolders: self.$editFolders))
             }
             else {
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing:0) {
-                        if (self.addFolder) {
-                            VStack {
-                                Divider()
-                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                HStack {
-                                    TextField("New Folder name", text: $newFolder,
-                                        onCommit: {
-                                            if data.addFolder(folderName: newFolder) {
-                                                self.addFolder.toggle()
-                                                self.newFolder = ""
-                                            } else {
-                                                self.showAddFolderError = true
-                                            }
-                                        }
-                                    )
-                                    .padding(10)
-                                    .alert(isPresented: $showAddFolderError) {
-                                                Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
-                                            }
-                                    Spacer()
+                List {
+                    HStack {
+                        TextField("Create New Folder", text: $newFolder,
+                            onCommit: {
+                                if data.addFolder(folderName: newFolder) {
+                                    self.newFolder = ""
+                                } else {
+                                    self.showAddFolderError = true
                                 }
-                                .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                Divider()
-                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                            }
-                            .background(Color.gray.opacity(0.3))
+                            })
+                        .padding(10)
+                        .alert(isPresented: $showAddFolderError) {
+                            Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
                         }
-                        ForEach(data.getFolders(), id: \.self) { i in
-                            FoldersListElement(notes: data.getNotesInFolder(folderName: i), fName: i, isEdit: self.$editFolders)
-                        }
+                        Spacer()
                     }
+                    ForEach(data.getFolders(), id: \.self) { i in
+                        FoldersListElement(notes: data.getNotesInFolder(folderName: i), fName: i).deleteDisabled(i == "All")
+                    }
+                    .onMove(perform: moveRow)
+                    .onDelete(perform: deleteRow)
                 }
+                .environment(\.editMode, $editMode).animation(.default)
                 .navigationBarTitle(Text("Notes"), displayMode: .inline)
-                .navigationBarItems(trailing: PopActionMenu(addFolder: self.$addFolder, editFolders: self.$editFolders))
+                .alert(isPresented: $showDeleteConfirm) {
+                    Alert(title: Text("Are you sure you want to delete this?"), message: Text("There is no undo"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            data.removeFolder(folderName: deleteFolderName)
+                            deleteFolderName = ""
+                        },
+                        secondaryButton: .cancel() {
+                            self.showDeleteConfirm = false
+                        })
+                    }
+                .navigationBarItems(trailing: PopActionMenu(editMode: $editMode))
             }
         }
+    }
+    
+    private func deleteRow(at offsets: IndexSet) {
+        self.deleteFolderName = data.folders[offsets.first!]
+        self.showDeleteConfirm = true
+    }
+    
+    private func moveRow(source: IndexSet, destination: Int) {
+        data.folders.move(fromOffsets: source, toOffset: destination)
+        data.rearrangeFolder(folders: data.folders)
     }
 }

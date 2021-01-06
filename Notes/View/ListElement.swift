@@ -11,7 +11,7 @@ import Firebase
 
 struct ListElement: View {
     var note: Note
-    var folder: String
+    var folderName: String
     
     @Binding var isRemovedMode: Bool
     @Environment(\.colorScheme) var colorScheme
@@ -19,44 +19,66 @@ struct ListElement: View {
     @EnvironmentObject var data: FirestoreDb
     
     var body: some View {
-        HStack(spacing: 15) {
-            VStack(alignment: .leading){
-                Divider()
-                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                HStack {
-                    Text(note.title).fontWeight(.bold).accentColor(self.colorScheme == .dark ? Color.white : Color.black).font(.system(size: 30)).padding(.horizontal, 10).padding(.top, 5)
-                    Spacer()
-                }
-                HStack {
-                    Text(note.date).lineLimit(1).accentColor(self.colorScheme == .dark ? Color.white : Color.black).padding(.horizontal, 10).padding(.bottom, 5)
-                    Spacer()
-                }
-                .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
-                Divider()
-                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-            }
-            
-            if isRemovedMode {
-                Button(action: {
-                    let db = Firestore.firestore()
-                    db.collection("notes").document(note.id).delete()
-
-                }) {
-                    Image(systemName: "minus.circle")
+        
+        if (!isRemovedMode || folderName == "All") {
+            NavigationLink(destination: EditNoteView(note: note, destination: folderName)) {
+                HStack(spacing: 10) {
+                    Image(systemName: "doc.richtext")
                     .resizable()
-                    .frame(width: 22, height: 22)
-                    .foregroundColor(.red)
+                    .frame(width: 24, height: 20)
+                    .font(Font.title.weight(.thin))
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(note.title).fontWeight(.bold).accentColor(self.colorScheme == .dark ? Color.white : Color.black).font(.system(size: 30)).padding(.horizontal, 10).padding(.top, 5).lineLimit(1)
+                            Spacer()
+                        }
+                        HStack {
+                            Text(note.date).lineLimit(1).accentColor(self.colorScheme == .dark ? Color.white : Color.black).padding(.horizontal, 10).padding(.bottom, 5)
+                            Spacer()
+                        }
+                        .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
+                    }
                 }
             }
-        }
-        .padding(.trailing, 10)
-        .background(Color.gray.opacity(0.3))
-        .alert(isPresented: $showDeleteConfirm) {
-            Alert(title: Text("Are you sure you want to remove this note from the folder?"), message: Text("The note still exist in other folders"),
-                primaryButton: .destructive(Text("Remove")) {
-                    data.removeNoteInFolder(note: note, folderName: folder)
-                },
-                secondaryButton: .cancel())
+        } else {
+            HStack {
+                Image(systemName: "doc.richtext")
+                .resizable()
+                .frame(width: 24, height: 20)
+                .font(Font.title.weight(.thin))
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(note.title).fontWeight(.bold).accentColor(self.colorScheme == .dark ? Color.white : Color.black).font(.system(size: 30)).padding(.horizontal, 10).padding(.top, 5).lineLimit(1)
+                        Spacer()
+                    }
+                    HStack {
+                        Text(note.date).lineLimit(1).accentColor(self.colorScheme == .dark ? Color.white : Color.black).padding(.horizontal, 10).padding(.bottom, 5)
+                        Spacer()
+                    }
+                    .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
+                }
+                .padding(10)
+                Spacer()
+                if isRemovedMode {
+                    Button(action: {
+                        self.showDeleteConfirm.toggle()
+                    }) {
+                        Image(systemName: "trash")
+                        .resizable()
+                        .frame(width: 18, height: 24)
+                        .font(Font.title.weight(.thin))
+                        .foregroundColor(Color.red)
+                    }
+                }
             }
+            .padding(.trailing, 10)
+            .alert(isPresented: $showDeleteConfirm) {
+                Alert(title: Text("Are you sure you want to delete this?"), message: Text("There is no undo"),
+                    primaryButton: .destructive(Text("Delete")) {
+                        data.removeFolder(folderName: folderName)
+                    },
+                    secondaryButton: .cancel())
+                }
+        }
     }
 }

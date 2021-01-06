@@ -15,7 +15,7 @@ extension View {
     }
 }
 
-class Host : UIHostingController<ContentView>{
+class Host : UIHostingController<Home>{
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         
@@ -33,42 +33,5 @@ struct Indicator : UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<Indicator>) {
-    }
-}
-
-struct NewFolderAlert : View {
-    
-    @State private var text: String = ""
-    @Binding var title: String
-    var body: some View {
-
-        VStack {
-            Text("Enter Input").font(.headline).padding()
-
-            TextField(title, text: $text)
-            Divider()
-            HStack {
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.windows[0].rootViewController?.dismiss(animated: true, completion: {})
-                }) {
-
-                    Text("Done")
-                }
-                Spacer()
-
-                Divider()
-
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.windows[0].rootViewController?.dismiss(animated: true, completion: {})
-                }) {
-                    Text("Cancel")
-                }
-                Spacer()
-            }.padding(0)
-
-
-            }.background(Color(white: 0.9))
     }
 }

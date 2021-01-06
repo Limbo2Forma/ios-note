@@ -10,4 +10,6 @@ target 'Notes' do
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Auth'
   pod 'FirebaseUI'
+  
+  pod 'RichEditorView', :git => 'https://github.com/cbess/RichEditorView.git'
 end

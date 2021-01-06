@@ -22,7 +22,7 @@ struct Login : View {
                     self.status()
                 }
             }.offset(y: self.MainviewState.height).animation(.spring())
-            ContentView().environmentObject(SessionStore()).offset(y: self.viewState.height).animation(.spring())
+            Home().environmentObject(SessionStore()).offset(y: self.viewState.height).animation(.spring())
         }
     }
     

@@ -47,7 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             else {
                 print(type(of:Auth.auth().currentUser))
-                window.rootViewController = UIHostingController(rootView:ContentView().environmentObject(FirestoreDb(user: Auth.auth().currentUser!)))
+                window.rootViewController = UIHostingController(rootView:Home().environmentObject(FirestoreDb(user: Auth.auth().currentUser!)))
             }
 //            window.rootViewController = Host(rootView: contentView)
             self.window = window

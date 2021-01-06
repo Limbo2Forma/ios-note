@@ -12,11 +12,9 @@ struct EditNoteView : View {
     
     var body : some View{
         VStack() {
-            Form {
-                TextField("Note Title", text: $title)
-                //RichDemoRepresentable()
-            }
-            Text("Tetert")
+            TextField("Note Title", text: $title)
+            Divider()
+            TextEditorView()
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {

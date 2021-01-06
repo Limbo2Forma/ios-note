@@ -48,10 +48,6 @@ class SessionStore : ObservableObject {
         Auth.auth().signIn(withEmail: email, password: password, completion: handler)
     }
     
-//    func signInFacebook() {
-//        Auth.auth().sign
-//    }
-
     func signOut () -> Bool {
         do {
             try Auth.auth().signOut()
