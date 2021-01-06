@@ -27,54 +27,53 @@ struct Home : View {
     
     var body : some View {
         NavigationView {
-            ZStack(alignment: .bottomTrailing) {
-                if (data.notes.isEmpty) {
-                    VStack {
-                        Spacer()
-                        Indicator()
-                        Spacer()
-                    }
+            if (data.notes.isEmpty) {
+                VStack {
+                    Spacer()
+                    Indicator()
+                    Spacer()
                 }
-                else {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(spacing:0) {
-                            if (self.addFolder) {
-                                VStack {
-                                    Divider()
-                                        .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                    HStack {
-                                        TextField("New Folder name", text: $newFolder,
-                                            onCommit: {
-                                                if data.addFolder(folderName: newFolder) {
-                                                    self.addFolder.toggle()
-                                                    self.newFolder = ""
-                                                } else {
-                                                    self.showAddFolderError = true
-                                                }
+                .navigationBarTitle(Text("Notes"), displayMode: .inline)
+                .navigationBarItems(trailing: PopActionMenu(addFolder: self.$addFolder, editFolders: self.$editFolders))
+            }
+            else {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing:0) {
+                        if (self.addFolder) {
+                            VStack {
+                                Divider()
+                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                HStack {
+                                    TextField("New Folder name", text: $newFolder,
+                                        onCommit: {
+                                            if data.addFolder(folderName: newFolder) {
+                                                self.addFolder.toggle()
+                                                self.newFolder = ""
+                                            } else {
+                                                self.showAddFolderError = true
                                             }
-                                        )
-                                        .padding(10)
-                                        .alert(isPresented: $showAddFolderError) {
-                                                    Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
-                                                }
-                                        Spacer()
-                                    }
-                                    .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
-                                    Divider()
-                                        .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                        }
+                                    )
+                                    .padding(10)
+                                    .alert(isPresented: $showAddFolderError) {
+                                                Alert(title: Text("Folder exist"), dismissButton: .default(Text("Got it!")))
+                                            }
+                                    Spacer()
                                 }
-                                .background(Color.gray.opacity(0.3))
+                                .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
+                                Divider()
+                                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
                             }
-                            ForEach(data.getFolders(), id: \.self) { i in
-                                FoldersListElement(notes: data.getNotesInFolder(folderName: i), fName: i, isEdit: self.$editFolders)
-                            }
+                            .background(Color.gray.opacity(0.3))
+                        }
+                        ForEach(data.getFolders(), id: \.self) { i in
+                            FoldersListElement(notes: data.getNotesInFolder(folderName: i), fName: i, isEdit: self.$editFolders)
                         }
                     }
                 }
-                
+                .navigationBarTitle(Text("Notes"), displayMode: .inline)
+                .navigationBarItems(trailing: PopActionMenu(addFolder: self.$addFolder, editFolders: self.$editFolders))
             }
-            .navigationBarTitle(Text("Notes"), displayMode: .inline)
-            .navigationBarItems(trailing: PopActionMenu(addFolder: self.$addFolder, editFolders: self.$editFolders))
         }
     }
 }
