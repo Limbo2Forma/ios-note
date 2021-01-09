@@ -69,6 +69,11 @@ struct Home : View {
                 .navigationBarItems(trailing: PopActionMenu(editMode: $editMode))
             }
         }
+        .onAppear(perform: getData)
+    }
+    
+    func getData() {
+        data.listen()
     }
     
     private func deleteRow(at offsets: IndexSet) {
@@ -78,6 +83,5 @@ struct Home : View {
     
     private func moveRow(source: IndexSet, destination: Int) {
         data.folders.move(fromOffsets: source, toOffset: destination)
-        data.rearrangeFolder(folders: data.folders)
     }
 }

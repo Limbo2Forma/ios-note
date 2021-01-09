@@ -4,7 +4,7 @@ import Combine
 
 class SessionStore : ObservableObject {
     var didChange = PassthroughSubject<SessionStore, Never>()
-    var sessionId: String? { didSet { self.didChange.send(self) }}
+    @Published var session: User? { didSet { self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
     
     let db = Firestore.firestore().collection("users")
@@ -15,7 +15,7 @@ class SessionStore : ObservableObject {
             if let user = user {
                 // if we have a user, create a new user model
                 print("Got user: \(user)")
-                self.sessionId = user.uid
+                self.session = user
                 
                 self.db.document(user.uid).getDocument { (document, error) in
                     if let document = document, !document.exists {
@@ -27,7 +27,7 @@ class SessionStore : ObservableObject {
                 }
             } else {
                 // if we don't have a user, set our session to nil
-                self.sessionId = nil
+                self.session = nil
             }
         }
     }
@@ -51,7 +51,7 @@ class SessionStore : ObservableObject {
     func signOut () -> Bool {
         do {
             try Auth.auth().signOut()
-            self.sessionId = nil
+            self.session = nil
             return true
         } catch {
             return false

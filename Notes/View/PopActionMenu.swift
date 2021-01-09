@@ -12,11 +12,17 @@ struct PopActionMenu: View {
     
     @Binding var editMode: EditMode
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var data: FirestoreDb
     
     var body: some View {
         HStack(spacing: 20) {
             Button(action: {
-                self.editMode = self.editMode == .active ? .inactive : .active
+                if self.editMode == .active {
+                    self.editMode = .inactive
+                    data.rearrangeFolder(folders: data.folders)
+                } else {
+                    self.editMode = .active
+                }
             }) {
                 Image(systemName: editMode == EditMode.active ? "checkmark" : "tray.full" ).resizable().frame(width: editMode == EditMode.active ? 23 : 26, height: 23)
                     .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black).font(Font.title.weight(.thin))

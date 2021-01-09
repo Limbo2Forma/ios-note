@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,8 +16,7 @@
 		7AA53A8225A1F7F400416348 /* firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8125A1F7F400416348 /* firestore.swift */; };
 		7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8525A1FA7900416348 /* NoteList.swift */; };
 		7ABFEC3C25A56EAD0029B942 /* RichTextDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFEC3B25A56EAD0029B942 /* RichTextDemo.swift */; };
-		7AC9227E25A2F0FB002919B7 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7AC9227D25A2F0FB002919B7 /* FacebookCore */; };
-		7AC9228025A2F0FB002919B7 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 7AC9227F25A2F0FB002919B7 /* FacebookShare */; };
+		7ABFEC3F25A630660029B942 /* RichTextDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFEC3E25A630650029B942 /* RichTextDemo2.swift */; };
 		7AC9228425A31E38002919B7 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC9228325A31E38002919B7 /* util.swift */; };
 		7AF7694925A36ED40089C0D7 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF7694825A36ED40089C0D7 /* Login.swift */; };
 		7AF769B525A4D6390089C0D7 /* firebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF769B425A4D6390089C0D7 /* firebaseAuth.swift */; };
@@ -40,6 +39,7 @@
 		7AA53A8125A1F7F400416348 /* firestore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firestore.swift; sourceTree = "<group>"; };
 		7AA53A8525A1FA7900416348 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
 		7ABFEC3B25A56EAD0029B942 /* RichTextDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextDemo.swift; sourceTree = "<group>"; };
+		7ABFEC3E25A630650029B942 /* RichTextDemo2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextDemo2.swift; sourceTree = "<group>"; };
 		7AC9228325A31E38002919B7 /* util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
 		7AF7694825A36ED40089C0D7 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		7AF769B425A4D6390089C0D7 /* firebaseAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firebaseAuth.swift; sourceTree = "<group>"; };
@@ -61,8 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AC9228025A2F0FB002919B7 /* FacebookShare in Frameworks */,
-				7AC9227E25A2F0FB002919B7 /* FacebookCore in Frameworks */,
 				3BA42E4EDDFD2D041D700904 /* Pods_Notes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +96,7 @@
 				7AF7694825A36ED40089C0D7 /* Login.swift */,
 				7AF769B825A4F2CC0089C0D7 /* PopActionMenu.swift */,
 				7ABFEC3B25A56EAD0029B942 /* RichTextDemo.swift */,
+				7ABFEC3E25A630650029B942 /* RichTextDemo2.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,8 +190,6 @@
 			);
 			name = Notes;
 			packageProductDependencies = (
-				7AC9227D25A2F0FB002919B7 /* FacebookCore */,
-				7AC9227F25A2F0FB002919B7 /* FacebookShare */,
 			);
 			productName = Notes;
 			productReference = ADAC5DC3240AC8DA0079EB30 /* Notes.app */;
@@ -223,7 +220,6 @@
 			);
 			mainGroup = ADAC5DBA240AC8DA0079EB30;
 			packageReferences = (
-				7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = ADAC5DC4240AC8DA0079EB30 /* Products */;
 			projectDirPath = "";
@@ -312,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ABFEC3F25A630660029B942 /* RichTextDemo2.swift in Sources */,
 				7AF769B525A4D6390089C0D7 /* firebaseAuth.swift in Sources */,
 				7AF769B925A4F2CC0089C0D7 /* PopActionMenu.swift in Sources */,
 				7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */,
@@ -525,30 +522,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		7AC9227D25A2F0FB002919B7 /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
-		7AC9227F25A2F0FB002919B7 /* FacebookShare */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7AC9227C25A2F0FB002919B7 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookShare;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ADAC5DBB240AC8DA0079EB30 /* Project object */;
 }

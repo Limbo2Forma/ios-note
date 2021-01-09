@@ -42,14 +42,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
+            let fdb = FirestoreDb()
+            fdb.listen()
+            
             if Auth.auth().currentUser == nil {
-                window.rootViewController = UIHostingController(rootView: Login())
+                print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
             }
             else {
-                print(type(of:Auth.auth().currentUser))
-                window.rootViewController = UIHostingController(rootView:Home().environmentObject(FirestoreDb(user: Auth.auth().currentUser!)))
+                print("Auth is not >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                print(Auth.auth().currentUser!.uid)
+                
+                window.rootViewController = UIHostingController(rootView:Home().environmentObject(fdb))
             }
-//            window.rootViewController = Host(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
         }

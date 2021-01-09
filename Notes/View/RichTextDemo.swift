@@ -3,7 +3,15 @@ import SwiftUI
 import RichEditorView
 
 struct TextEditorView: UIViewControllerRepresentable {
+    var note: Note
+    
+    func makeCoordinator() -> TextEditorView.Coordinator {
+        return Coordinator(self)
+    }
+    
     func makeUIViewController(context: Context) -> EditorViewController {
+        var editorView = EditorViewController()
+//        editorView.delegate = context.coordinator
         return EditorViewController()
     }
 
@@ -12,10 +20,25 @@ struct TextEditorView: UIViewControllerRepresentable {
     }
 }
 
+extension TextEditorView {
+    class Coordinator: NSObject, RichEditorDelegate {
+        var parent: TextEditorView
+
+        init(_ parent: TextEditorView) {
+            self.parent = parent
+        }
+
+        func richTextModifiedText(_ viewController: EditorViewController) {
+            parent.note.content = viewController.currentContent
+        }
+    }
+}
+
 
 class EditorViewController: UIViewController {
     var editorView = RichEditorView()
     var isTextColor = true
+    var currentContent = ""
 
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
@@ -28,6 +51,7 @@ class EditorViewController: UIViewController {
         additionalSafeAreaInsets = .init(top: 6, left: 12, bottom: 0, right: 12)
         editorView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         editorView.center.x = view.center.x
+        
         editorView.delegate = self
         editorView.inputAccessoryView = toolbar
         editorView.placeholder = "Edit here"
@@ -50,14 +74,13 @@ class EditorViewController: UIViewController {
         self.view.addSubview(toolbar)
         toolbar.frame.origin.y = self.view.frame.size.height - 215 - toolbar.frame.size.height
     }
-
 }
 
 extension EditorViewController: RichEditorDelegate {
     func richEditor(_ editor: RichEditorView, heightDidChange height: Int) { }
 
     func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
-        print(content)
+//        self.currentContent = content
     }
 
     func richEditorTookFocus(_ editor: RichEditorView) { }

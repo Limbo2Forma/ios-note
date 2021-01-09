@@ -11,9 +11,9 @@ public var screenHeight: CGFloat {
 }
 
 struct Login : View {
-    
-    @State private var viewState = CGSize(width: 0, height: screenHeight)
+    @State var viewState = CGSize(width: 0, height: screenHeight)
     @State private var MainviewState = CGSize.zero
+    @EnvironmentObject var data: FirestoreDb
     
     var body : some View {
         ZStack {
@@ -22,7 +22,7 @@ struct Login : View {
                     self.status()
                 }
             }.offset(y: self.MainviewState.height).animation(.spring())
-            Home().environmentObject(SessionStore()).offset(y: self.viewState.height).animation(.spring())
+            Home().environmentObject(data).offset(y: self.viewState.height).animation(.spring())
         }
     }
     
