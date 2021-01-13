@@ -19,7 +19,6 @@
 		7ABFEC3F25A630660029B942 /* RichTextDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFEC3E25A630650029B942 /* RichTextDemo2.swift */; };
 		7AC9228425A31E38002919B7 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC9228325A31E38002919B7 /* util.swift */; };
 		7AF7694925A36ED40089C0D7 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF7694825A36ED40089C0D7 /* Login.swift */; };
-		7AF769B525A4D6390089C0D7 /* firebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF769B425A4D6390089C0D7 /* firebaseAuth.swift */; };
 		7AF769B925A4F2CC0089C0D7 /* PopActionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF769B825A4F2CC0089C0D7 /* PopActionMenu.swift */; };
 		ADAC5DC7240AC8DA0079EB30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DC6240AC8DA0079EB30 /* AppDelegate.swift */; };
 		ADAC5DC9240AC8DA0079EB30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC5DC8240AC8DA0079EB30 /* SceneDelegate.swift */; };
@@ -42,7 +41,6 @@
 		7ABFEC3E25A630650029B942 /* RichTextDemo2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextDemo2.swift; sourceTree = "<group>"; };
 		7AC9228325A31E38002919B7 /* util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
 		7AF7694825A36ED40089C0D7 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		7AF769B425A4D6390089C0D7 /* firebaseAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firebaseAuth.swift; sourceTree = "<group>"; };
 		7AF769B825A4F2CC0089C0D7 /* PopActionMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopActionMenu.swift; sourceTree = "<group>"; };
 		9F86FB09E0F8CB5DAF9C343E /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC5DC3240AC8DA0079EB30 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,7 +77,6 @@
 		7A574585259F6D4B00AA5CB7 /* firebase */ = {
 			isa = PBXGroup;
 			children = (
-				7AF769B425A4D6390089C0D7 /* firebaseAuth.swift */,
 				7AA53A8125A1F7F400416348 /* firestore.swift */,
 			);
 			path = firebase;
@@ -309,7 +306,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ABFEC3F25A630660029B942 /* RichTextDemo2.swift in Sources */,
-				7AF769B525A4D6390089C0D7 /* firebaseAuth.swift in Sources */,
 				7AF769B925A4F2CC0089C0D7 /* PopActionMenu.swift in Sources */,
 				7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */,
 				7AF7694925A36ED40089C0D7 /* Login.swift in Sources */,

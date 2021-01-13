@@ -16,7 +16,11 @@ struct TextEditorView2: UIViewRepresentable {
     typealias UIViewType = RichEditorView
     
     func makeUIView(context: Context) -> RichEditorView {
-      return RichEditorView()
+        var editorView = RichEditorView()
+        editorView.placeholder = "Edit here"
+        let html = "<b>Jesus is God.</b> He saves by grace through faith alone. Soli Deo gloria! <a href='https://perfectGod.com'>perfectGod.com</a>"
+        editorView.reloadHTML(with: html)
+      return editorView
     }
     
     func updateUIView(_ uiView: RichEditorView, context: Context) {

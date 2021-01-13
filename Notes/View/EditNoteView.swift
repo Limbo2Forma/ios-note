@@ -14,7 +14,7 @@ struct EditNoteView : View {
         VStack() {
             TextField("Note Title", text: $title)
             Divider()
-//            TextEditorView()
+            TextEditorView()
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {

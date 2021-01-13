@@ -3,14 +3,14 @@ import SwiftUI
 import RichEditorView
 
 struct TextEditorView: UIViewControllerRepresentable {
-    var note: Note
+//    var note: Note
     
     func makeCoordinator() -> TextEditorView.Coordinator {
         return Coordinator(self)
     }
     
     func makeUIViewController(context: Context) -> EditorViewController {
-        var editorView = EditorViewController()
+//        var editorView = EditorViewController()
 //        editorView.delegate = context.coordinator
         return EditorViewController()
     }
@@ -29,7 +29,7 @@ extension TextEditorView {
         }
 
         func richTextModifiedText(_ viewController: EditorViewController) {
-            parent.note.content = viewController.currentContent
+//            parent.note.content = viewController.currentContent
         }
     }
 }
@@ -39,7 +39,8 @@ class EditorViewController: UIViewController {
     var editorView = RichEditorView()
     var isTextColor = true
     var currentContent = ""
-
+//    var note: Note
+    
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
         toolbar.options = RichEditorDefaultOption.all
