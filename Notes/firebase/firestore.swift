@@ -13,6 +13,7 @@ import FirebaseFirestore
 
 class FirestoreDb : ObservableObject {
     
+//    @Published var selectedNote: Note
     @Published var notes = [Note]()
     @Published var noData = false
     @Published var folders = [String]()

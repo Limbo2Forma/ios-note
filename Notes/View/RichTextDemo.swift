@@ -3,15 +3,12 @@ import SwiftUI
 import RichEditorView
 
 struct TextEditorView: UIViewControllerRepresentable {
-//    var note: Note
     
     func makeCoordinator() -> TextEditorView.Coordinator {
         return Coordinator(self)
     }
     
     func makeUIViewController(context: Context) -> EditorViewController {
-//        var editorView = EditorViewController()
-//        editorView.delegate = context.coordinator
         return EditorViewController()
     }
 
@@ -56,7 +53,7 @@ class EditorViewController: UIViewController {
         editorView.delegate = self
         editorView.inputAccessoryView = toolbar
         editorView.placeholder = "Edit here"
-        let html = "<b>Jesus is God.</b> He saves by grace through faith alone. Soli Deo gloria! <a href='https://perfectGod.com'>perfectGod.com</a>"
+        let html = "<b>Jesus is God.</b> He saves by grace through faith alone. Soli Deo gloria!"
         editorView.reloadHTML(with: html)
         
         toolbar.delegate = self
@@ -71,6 +68,7 @@ class EditorViewController: UIViewController {
         options.append(item)
         toolbar.options = options
         
+        // add note title textview heres
         self.view.addSubview(editorView)
         self.view.addSubview(toolbar)
         toolbar.frame.origin.y = self.view.frame.size.height - 215 - toolbar.frame.size.height
@@ -138,18 +136,11 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
     }
 
     func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar) {
+        // do insert image here, get url
+        
         toolbar.editor?.insertImage("https://avatars2.githubusercontent.com/u/10981?s=60", alt: "Gravatar")
     }
 
-    func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
-        // Can only add links to selected text, so make sure there is a range selection first
-        toolbar.editor?.hasRangeSelection(handler: { (hasSelection) in
-            if hasSelection {
-                self.toolbar.editor?.insertLink("https://github.com/cbess/RichEditorView", title: "GitHub Link")
-            }
-        })
-    }
-    
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         var color: UIColor? = viewController.selectedColor
         
