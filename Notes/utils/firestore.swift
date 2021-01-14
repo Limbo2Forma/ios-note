@@ -17,6 +17,7 @@ class FirestoreDb : ObservableObject {
     @Published var notes = [Note]()
     @Published var noData = false
     @Published var folders = [String]()
+    @Published var currentNoteContent = String()
     
 //    var uuid = "wfR97S1gZ8f22Kt4VLTt3bfhaQ83"
     var db: DocumentReference? = nil

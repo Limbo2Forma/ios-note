@@ -18,7 +18,6 @@ struct Home : View {
     @State private var editMode = EditMode.inactive
     @State private var showAddFolderError = false
     @State private var showDeleteConfirm = false
-    
     @State var deleteFolderName = ""
     
     var body : some View {

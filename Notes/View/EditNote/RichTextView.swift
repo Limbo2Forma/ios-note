@@ -1,42 +1,56 @@
 import UIKit
 import SwiftUI
+import Combine
 import RichEditorView
 
 struct TextEditorView: UIViewControllerRepresentable {
+    var initContent: String
+    @Binding var noteContent: String
     
-    func makeCoordinator() -> TextEditorView.Coordinator {
-        return Coordinator(self)
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(noteContent: $noteContent)
     }
     
     func makeUIViewController(context: Context) -> EditorViewController {
-        return EditorViewController()
+        let editorView = EditorViewController()
+        editorView.noteContent = initContent
+        editorView.richEditorViewDelegate = context.coordinator
+        return editorView
     }
 
-    func updateUIViewController(_ uiViewController: EditorViewController, context: Context) {
+    func updateUIViewController(_ uiViewController: EditorViewController, context: Context){
+    }
+}
+
+class Coordinator: NSObject, RichEditorDelegate {
+    @Binding var noteContent: String
     
+    init(noteContent: Binding<String>) {
+        _noteContent = noteContent
     }
-}
+    
+    func richEditor(_ editor: RichEditorView, heightDidChange height: Int) { }
 
-extension TextEditorView {
-    class Coordinator: NSObject, RichEditorDelegate {
-        var parent: TextEditorView
-
-        init(_ parent: TextEditorView) {
-            self.parent = parent
-        }
-
-        func richTextModifiedText(_ viewController: EditorViewController) {
-//            parent.note.content = viewController.currentContent
-        }
+    func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
+        noteContent = content
     }
-}
 
+    func richEditorTookFocus(_ editor: RichEditorView) { }
+    
+    func richEditorLostFocus(_ editor: RichEditorView) { }
+    
+    func richEditorDidLoad(_ editor: RichEditorView) { }
+    
+    func richEditor(_ editor: RichEditorView, shouldInteractWith url: URL) -> Bool { return true }
+
+    func richEditor(_ editor: RichEditorView, handleCustomAction content: String) { }
+}
 
 class EditorViewController: UIViewController {
     var editorView = RichEditorView()
     var isTextColor = true
-    var currentContent = ""
-//    var note: Note
+    var noteContent = String()
+    var richEditorViewDelegate: RichEditorDelegate? = nil
     
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
@@ -49,11 +63,10 @@ class EditorViewController: UIViewController {
         additionalSafeAreaInsets = .init(top: 6, left: 12, bottom: 0, right: 12)
         editorView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         editorView.center.x = view.center.x
-        
-        editorView.delegate = self
+        editorView.delegate = richEditorViewDelegate
         editorView.inputAccessoryView = toolbar
         editorView.placeholder = "Edit here"
-        let html = "<b>Jesus is God.</b> He saves by grace through faith alone. Soli Deo gloria!"
+        let html = noteContent
         editorView.reloadHTML(with: html)
         
         toolbar.delegate = self
@@ -73,24 +86,6 @@ class EditorViewController: UIViewController {
         self.view.addSubview(toolbar)
         toolbar.frame.origin.y = self.view.frame.size.height - 215 - toolbar.frame.size.height
     }
-}
-
-extension EditorViewController: RichEditorDelegate {
-    func richEditor(_ editor: RichEditorView, heightDidChange height: Int) { }
-
-    func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
-//        self.currentContent = content
-    }
-
-    func richEditorTookFocus(_ editor: RichEditorView) { }
-    
-    func richEditorLostFocus(_ editor: RichEditorView) { }
-    
-    func richEditorDidLoad(_ editor: RichEditorView) { }
-    
-    func richEditor(_ editor: RichEditorView, shouldInteractWith url: URL) -> Bool { return true }
-
-    func richEditor(_ editor: RichEditorView, handleCustomAction content: String) { }
 }
 
 extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewControllerDelegate {

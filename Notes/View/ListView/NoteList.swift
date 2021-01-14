@@ -11,14 +11,25 @@ import SwiftUI
 struct NoteList: View {
     var notes: [Note]
     var title: String
-    @State var removeMode = false
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var data: FirestoreDb
+    @State var removeMode = false
+    @State private var showDeleteConfirm = false
+    @State var deleteNote: Note? = nil
     
     var body: some View {
         List {
-            ForEach(notes) { i in
-                ListElement(note: i, folderName: title, isRemovedMode: $removeMode)
+            if (title != "All") {
+                ForEach(notes) { i in
+                    ListElement(note: i, folderName: title, isRemovedMode: $removeMode)
+                }
+                .onDelete(perform: deleteRow)
+            } else {
+                ForEach(notes) { i in
+                    ListElement(note: i, folderName: title, isRemovedMode: $removeMode)
+                }
             }
+            
         }
         .navigationBarTitle(Text(title), displayMode: .inline)
         .navigationBarItems(trailing:
@@ -37,5 +48,20 @@ struct NoteList: View {
                             .font(Font.title.weight(.thin))
                 }
             })
+        .alert(isPresented: $showDeleteConfirm) {
+            Alert(title: Text("Are you sure you want to delete this?"), message: Text("The note still exist, but not in this folder"),
+                primaryButton: .destructive(Text("Delete")) {
+                    data.removeNoteInFolder(note: deleteNote!, folderName: title)
+                    deleteNote = nil
+                },
+                secondaryButton: .cancel() {
+                    self.showDeleteConfirm = false
+                })
+            }
+    }
+    
+    private func deleteRow(at offsets: IndexSet) {
+        self.deleteNote = notes[offsets.first!]
+        self.showDeleteConfirm = true
     }
 }
