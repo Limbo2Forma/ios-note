@@ -8,24 +8,53 @@
 
 import UIKit
 import SwiftUI
+import FBSDKCoreKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    
+    // Swift
+    //
+    // SceneDelegate.swift
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+        
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
+    }
 
-
+        
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
-
+        
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = Host(rootView: contentView)
+            let fdb = FirestoreDb()
+            fdb.listen()
+//            window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
+            if Auth.auth().currentUser == nil {
+                print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
+            }
+            else {
+                print("Auth is not >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                print(Auth.auth().currentUser!.uid)
+
+                window.rootViewController = UIHostingController(rootView:Home().environmentObject(fdb))
+            }
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -58,7 +87,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 

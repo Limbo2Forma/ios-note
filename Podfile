@@ -5,17 +5,12 @@ target 'Notes' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-pod 'Firebase/Firestore'
-
   # Pods for Notes
-
-  target 'NotesTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'NotesUITests' do
-    # Pods for testing
-  end
-
+  pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Auth'
+  pod 'FBSDKShareKit'
+  pod 'FirebaseUI'
+  
+  pod 'RichEditorView', :git => 'https://github.com/cbess/RichEditorView.git'
 end
