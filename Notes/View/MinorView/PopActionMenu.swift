@@ -14,6 +14,8 @@ struct PopActionMenu: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb
     
+    @State var showCreateNote = false
+    
     var body: some View {
         HStack(spacing: 20) {
             Button(action: {
@@ -25,12 +27,19 @@ struct PopActionMenu: View {
                 }
             }) {
                 Image(systemName: editMode == EditMode.active ? "checkmark" : "tray.full" ).resizable().frame(width: editMode == EditMode.active ? 23 : 26, height: 23)
-                    .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black).font(Font.title.weight(.thin))
+                    .foregroundColor(Color.blue).font(Font.title.weight(.thin))
             }
-            NavigationLink(destination: EditNoteView(note: nil, destination: "All")) {
-            Image(systemName: "plus").resizable().frame(width: 23, height: 23)
-                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                .font(Font.title.weight(.thin))
+            Button(action: {
+                self.showCreateNote.toggle()
+            }) {
+                Image(systemName: "plus").resizable().frame(width: 23, height: 23)
+                    .foregroundColor(Color.blue)
+                    .font(Font.title.weight(.thin))
+                    .sheet(isPresented: $showCreateNote, content: {
+                        NavigationView {
+                            EditNoteView(note: nil, destination: "All")
+                        }
+                    })
             }
         }
     }

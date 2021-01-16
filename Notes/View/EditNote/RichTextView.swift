@@ -39,7 +39,9 @@ class Coordinator: NSObject, RichEditorDelegate {
     
     func richEditorLostFocus(_ editor: RichEditorView) { }
     
-    func richEditorDidLoad(_ editor: RichEditorView) { }
+    func richEditorDidLoad(_ editor: RichEditorView) {
+        noteContent = editor.contentHTML;
+    }
     
     func richEditor(_ editor: RichEditorView, shouldInteractWith url: URL) -> Bool { return true }
 

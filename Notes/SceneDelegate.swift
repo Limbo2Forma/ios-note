@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else {
             return
         }
-
+        
         ApplicationDelegate.shared.application(
             UIApplication.shared,
             open: url,
@@ -38,13 +38,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-
+        
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let fdb = FirestoreDb()
             fdb.listen()
-            
+//            window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
             if Auth.auth().currentUser == nil {
                 print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
@@ -52,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             else {
                 print("Auth is not >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 print(Auth.auth().currentUser!.uid)
-                
+
                 window.rootViewController = UIHostingController(rootView:Home().environmentObject(fdb))
             }
             self.window = window
@@ -87,7 +87,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 

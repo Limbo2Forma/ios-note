@@ -14,4 +14,5 @@ struct Note : Identifiable, Codable {
     var folders : [String]
     var content : String
     var date : String
+    var pinned: Bool
 }

@@ -16,13 +16,15 @@ struct Login : View {
     @EnvironmentObject var data: FirestoreDb
     
     var body : some View {
-        ZStack {
+        if data.currentUser != nil {
+            Home().onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
+        }
+        else {
             CustomLoginViewController { (error) in
                 if error == nil {
                     self.status()
                 }
             }.offset(y: self.MainviewState.height).animation(.spring())
-            Home().environmentObject(data).offset(y: self.viewState.height).animation(.spring())
         }
     }
     

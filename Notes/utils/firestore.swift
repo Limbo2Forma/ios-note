@@ -13,17 +13,15 @@ import FirebaseFirestore
 
 class FirestoreDb : ObservableObject {
     
-//    @Published var selectedNote: Note
     @Published var notes = [Note]()
     @Published var noData = false
     @Published var folders = [String]()
     @Published var currentNoteContent = String()
+    @Published var currentUser: User? = nil
     
-//    var uuid = "wfR97S1gZ8f22Kt4VLTt3bfhaQ83"
     var db: DocumentReference? = nil
     let format = DateFormatter()
     var handle: AuthStateDidChangeListenerHandle?
-    
     var folderListener: ListenerRegistration? = nil
     var noteListener: ListenerRegistration? = nil
     var listenerExist = false
@@ -33,23 +31,21 @@ class FirestoreDb : ObservableObject {
             if let user = user {
                 // if we have a user, create a new user model
                 print("Got user: \(user)")
-                
+                self.currentUser = user
                 Firestore.firestore().collection("users").document(user.uid).getDocument { (document, error) in
                     if let document = document, !document.exists {
                         Firestore.firestore().collection("users").document(user.uid).setData([
                             "email": user.email!,
                             "folders": ["All"]
                         ])
-                        if self.listenerExist {
-                            self.detachDataListener()
-                        }
-                        self.attachDataListener(user: user)
-                    } else {
-                        if self.listenerExist {
-                            self.detachDataListener()
-                        }
-                        self.attachDataListener(user: user)
                     }
+                    self.attachDataListener(user: user)
+                }
+            } else {
+                print("user exit")
+                self.currentUser = nil
+                if self.listenerExist == true {
+                    self.detachDataListener()
                 }
             }
         }
@@ -62,14 +58,24 @@ class FirestoreDb : ObservableObject {
     }
     
     func detachDataListener() {
-        self.noteListener!.remove()
-        self.folderListener!.remove()
+        print("Detach Listener")
+        if self.noteListener != nil {
+            self.noteListener!.remove()
+        }
+        if self.folderListener != nil {
+            self.folderListener!.remove()
+        }
+        self.notes = [Note]()
+        self.noData = false
+        self.folders = [String]()
+        self.currentNoteContent = String()
+        self.listenerExist = false
     }
     
     func attachDataListener(user: User) {
+        print("Attach Listener")
         self.db = Firestore.firestore().collection("users").document(user.uid)
         self.listenerExist = true
-        
         self.noteListener = self.db!.collection("notes").order(by: "date", descending: false).addSnapshotListener { (snap, err) in
             
             if err != nil {
@@ -91,25 +97,34 @@ class FirestoreDb : ObservableObject {
                     let folders = i.document.get("folders") as! [String]
                     let content = i.document.get("content") as! String
                     let date = i.document.get("date") as! Timestamp
+                    let pinned = i.document.get("pinned") as! Bool
                     
                     self.format.dateFormat = "dd-MM-YY hh:mm a"
                     let dateString = self.format.string(from: date.dateValue())
                     
-                    let newNote = Note(id: id, title: title, folders: folders, content: content, date:dateString)
+                    let newNote = Note(id: id, title: title, folders: folders, content: content, date:dateString, pinned: pinned)
                     self.notes.append(newNote)
                 }
                 
                 if i.type == .modified {
                     let id = i.document.documentID
                     let title = i.document.get("title") as! String
-                    let folders = i.document.get("folder") as! [String]
+                    let folders = i.document.get("folders") as! [String]
                     let content = i.document.get("content") as! String
+                    let date = i.document.get("date") as! Timestamp
+                    let pinned = i.document.get("pinned") as! Bool
                     
                     for i in 0..<self.notes.count {
                         if self.notes[i].id == id {
                             self.notes[i].title = title
                             self.notes[i].folders = folders
                             self.notes[i].content = content
+                            self.notes[i].pinned = pinned
+                            
+                            self.format.dateFormat = "dd-MM-YY hh:mm a"
+                            let dateString = self.format.string(from: date.dateValue())
+                            
+                            self.notes[i].date = dateString
                         }
                     }
                 }
@@ -156,6 +171,12 @@ class FirestoreDb : ObservableObject {
     
     func isNoData() -> Bool {
         return noData
+    }
+    
+    func getPinnedNotes() -> [Note] {
+        return notes.filter { n in
+            return n.pinned
+        }
     }
     
     func getNotesInFolder(folderName: String) -> [Note] {
@@ -254,12 +275,24 @@ class FirestoreDb : ObservableObject {
         return false
     }
     
+    func pinNote(note: Note) -> Bool{
+        self.db!.collection("notes").document(note.id).updateData([
+            "pinned": !note.pinned
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+        return true
+    }
+    
     func addNoteInFolder(note: Note, folderName: String) -> Bool{
         if note.folders.contains(folderName) {
             return false
         }
-        var noteph = note
-        noteph.folders.append(folderName)
+        var noteph = note.folders
+        noteph.append(folderName)
         
         self.db!.collection("notes").document(note.id).updateData([
             "folders": noteph
@@ -283,29 +316,40 @@ class FirestoreDb : ObservableObject {
         }
     }
     
-    func saveNote(note: Note) {
-        if note.id != "" {
-            self.db!.collection("notes").document(note.id).updateData([
-                "title": note.title,
-                "content": note.content
-            ]) { (err) in
-                if err != nil{
-                    print((err?.localizedDescription)!)
-                    return
-                }
+    func createNote(title: String, content: String, destination: String) {
+        db!.collection("notes").document().setData([
+            "title": title,
+            "folders": destination == "All" ? ["All"] : ["All", destination],
+            "content": content,
+            "pinned": false,
+            "date": Date()
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
             }
         }
-        else {
-            db!.collection("notes").document().setData([
-                "title": note.title,
-                "folder": ["All"],
-                "content": note.content,
-                "date": note.date
-            ]) { (err) in
-                if err != nil{
-                    print((err?.localizedDescription)!)
-                    return
-                }
+    }
+    
+    func updateNote(note: Note) {
+        self.db!.collection("notes").document(note.id).updateData([
+            "title": note.title,
+            "content": note.content,
+            "date": Date()
+        ]) { (err) in
+            if err != nil{
+                print((err?.localizedDescription)!)
+                return
+            }
+        }
+    }
+    
+    func deleteNote(note: Note) {
+        self.db!.collection("notes").document(note.id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
             }
         }
     }

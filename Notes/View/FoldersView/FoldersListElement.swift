@@ -28,7 +28,7 @@ struct FoldersListElement: View {
     
     var body: some View {
         if (!onTextEdit || folderName == "All") {
-            NavigationLink(destination: NoteList(notes: notes, title: folderName)) {
+            NavigationLink(destination: NoteList(title: folderName)) {
                 HStack(spacing: 10) {
                     Image(systemName: "folder")
                     .resizable()

@@ -9,59 +9,75 @@
 import SwiftUI
 
 struct NoteList: View {
-    var notes: [Note]
+
     var title: String
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb
-    @State var removeMode = false
-    @State private var showDeleteConfirm = false
+    
+    @State var showCreateNote = false
     @State var deleteNote: Note? = nil
+    @State var searchKeyword : String = ""
+    @State var showAddNoteToFolder = false
     
     var body: some View {
-        List {
-            if (title != "All") {
-                ForEach(notes) { i in
-                    ListElement(note: i, folderName: title, isRemovedMode: $removeMode)
-                }
-                .onDelete(perform: deleteRow)
-            } else {
-                ForEach(notes) { i in
-                    ListElement(note: i, folderName: title, isRemovedMode: $removeMode)
+        VStack {
+            SearchBar(text: $searchKeyword)
+            List {
+                if (title != "All") {
+                    ForEach(data.getNotesInFolder(folderName: title).filter {
+                        self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())
+                    }) { i in
+                        ListElement(note: i, folderName: title)
+                    }
+                    .onDelete(perform: deleteRow)
+                } else {
+                    ForEach(data.getNotesInFolder(folderName: title).filter {
+                        self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())
+                    }) { i in
+                        ListElement(note: i, folderName: title)
+                    }
                 }
             }
-            
-        }
-        .navigationBarTitle(Text(title), displayMode: .inline)
-        .navigationBarItems(trailing:
-            HStack(spacing: 20) {
-                if (title != "All") {
-                    Button(action: {
-                    self.removeMode.toggle()
-                        }) {
-                        Image(systemName: self.removeMode ? "xmark" : "tray.full").resizable().frame(width: self.removeMode ? 23 : 26, height: 23).foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                            .font(Font.title.weight(.thin))
-                        }
-                }
-                NavigationLink(destination: EditNoteView(note: nil, destination: title)) {
-                        Image(systemName: "plus").resizable().frame(width: 23, height: 23)
-                            .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-                            .font(Font.title.weight(.thin))
+            .sheet(isPresented: $showAddNoteToFolder, content: {
+                NavigationView {
+                    NotePicker(title: title,notes: data.notes, showPicker: $showAddNoteToFolder)
                 }
             })
-        .alert(isPresented: $showDeleteConfirm) {
-            Alert(title: Text("Are you sure you want to delete this?"), message: Text("The note still exist, but not in this folder"),
-                primaryButton: .destructive(Text("Delete")) {
-                    data.removeNoteInFolder(note: deleteNote!, folderName: title)
-                    deleteNote = nil
-                },
-                secondaryButton: .cancel() {
-                    self.showDeleteConfirm = false
+            .navigationBarTitle(Text(title), displayMode: .inline)
+            .navigationBarItems(trailing:
+                HStack(spacing: 20) {
+                    if (title != "All") {
+                        Button(action: {
+                            self.showAddNoteToFolder = true
+                            }) {
+                            Image(systemName: "note.text.badge.plus").resizable().frame(width: 26, height: 23).foregroundColor(Color.blue)
+                                .font(Font.title.weight(.thin))
+                            }
+                    }
+                    Button(action: {
+                        self.showCreateNote.toggle()
+                    }) {
+                        Image(systemName: "plus").resizable().frame(width: 23, height: 23)
+                            .foregroundColor(Color.blue)
+                            .font(Font.title.weight(.thin))
+                            .sheet(isPresented: $showCreateNote, content: {
+                                NavigationView {
+                                    EditNoteView(note: nil, destination: title)
+                                }
+                            })
+                    }
                 })
-            }
+        }
     }
     
     private func deleteRow(at offsets: IndexSet) {
-        self.deleteNote = notes[offsets.first!]
-        self.showDeleteConfirm = true
+        self.deleteNote = data.getNotesInFolder(folderName: title)[offsets.first!]
+        if (title != "All") {
+            data.removeNoteInFolder(note: deleteNote!, folderName: title)
+        } else {
+            data.deleteNote(note: deleteNote!)
+        }
+        
+        deleteNote = nil
     }
 }
