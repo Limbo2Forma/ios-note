@@ -1,0 +1,26 @@
+{
+  "name": "RichEditorView",
+  "version": "5.1",
+  "summary": "Rich Text Editor for iOS written in Swift",
+  "homepage": "https://github.com/cjwirth/RichEditorView",
+  "license": "BSD 3-clause",
+  "authors": {
+    "C. Bess": "cbess@users.noreply.github.com",
+    "Caesar Wirth": "cjwirth@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/cbess/RichEditorView.git",
+    "tag": "5.1"
+  },
+  "platforms": {
+    "ios": "12.0"
+  },
+  "swift_versions": "5.0",
+  "requires_arc": true,
+  "source_files": "RichEditorView/Classes/*",
+  "resources": [
+    "RichEditorView/Assets/icons/*",
+    "RichEditorView/Assets/editor/*"
+  ],
+  "swift_version": "5.0"
+}
