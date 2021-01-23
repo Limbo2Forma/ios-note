@@ -111,7 +111,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
         if let originalImage = originalImage {
-            if let resziedImage = originalImage.resized(width: view.frame.width) {
+            if let resziedImage = originalImage.resized(width: view.bounds.width) {
                 if let data = resziedImage.pngData() {
                     uploadPhoto(data: data) {(url) in
                         if let url = url {
