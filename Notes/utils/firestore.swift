@@ -76,7 +76,7 @@ class FirestoreDb : ObservableObject {
         print("Attach Listener")
         self.db = Firestore.firestore().collection("users").document(user.uid)
         self.listenerExist = true
-        self.noteListener = self.db!.collection("notes").order(by: "date", descending: false).addSnapshotListener { (snap, err) in
+        self.noteListener = self.db!.collection("notes").order(by: "date", descending: true).addSnapshotListener { (snap, err) in
             
             if err != nil {
                 print((err?.localizedDescription)!)
@@ -178,9 +178,31 @@ class FirestoreDb : ObservableObject {
             return n.pinned
         }
     }
-    
+    func dateStringInMilliseconds(_ dateString: String) -> Int {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "dd-MM-yy hh:mm a"
+        let date = dateFormater.date(from: dateString)
+        return Int(date!.timeIntervalSince1970 * 1000)
+    }
+//    func dateCompare(_ dateStr1: String, _ dateStr2: String) -> Bool {
+//        let dateFormater = DateFormatter()
+//        dateFormater.dateFormat = "dd-MM-yy hh:mm a"
+//        let date1 = dateFormater.date(from: dateStr1)! as Date
+//        let date2 = dateFormater.date(from: dateStr2)! as Date
+//        let ansiDateFormatter = DateFormatter()
+//        ansiDateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
+//        let ansiDateStr1 = ansiDateFormatter.string(from: date1)
+//        let ansiDateStr2 = ansiDateFormatter.string(from: date2)
+//        print("        \(ansiDateStr1) vs \(ansiDateStr1) : \(ansiDateStr1 > ansiDateStr2)")
+//        return ansiDateStr1 > ansiDateStr2
+//    }
     func getNotesInFolder(folderName: String) -> [Note] {
-        return notes.filter { n in
+        return notes.sorted(by: { (note1, note2) -> Bool in
+            let result = dateStringInMilliseconds(note1.date) > dateStringInMilliseconds(note2.date)
+//            let result = dateCompare(note1.date, note2.date)
+//            print("compare \(note1.date) vs \(note2.date) : \(result)")
+            return result
+        }).filter { n in
             return n.folders.contains(folderName)
         }
     }

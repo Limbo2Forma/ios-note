@@ -30,6 +30,7 @@
 		ADAC5DCD240AC8DE0079EB30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADAC5DCC240AC8DE0079EB30 /* Assets.xcassets */; };
 		ADAC5DD0240AC8DE0079EB30 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADAC5DCF240AC8DE0079EB30 /* Preview Assets.xcassets */; };
 		ADAC5DD3240AC8DE0079EB30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAC5DD1240AC8DE0079EB30 /* LaunchScreen.storyboard */; };
+		D2BFAA4D25BC394700355603 /* Extensions+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BFAA4C25BC394700355603 /* Extensions+UIImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		ADAC5DD2240AC8DE0079EB30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADAC5DD4240AC8DE0079EB30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC5A8C0EF068FB34E18DEE68 /* Pods-Notes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.debug.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.debug.xcconfig"; sourceTree = "<group>"; };
+		D2BFAA4C25BC394700355603 /* Extensions+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIImage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 		ADAC5DC5240AC8DA0079EB30 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				D2BFAA5025BC3D6700355603 /* Extensions */,
 				7A5745B7259F7CAB00AA5CB7 /* Model */,
 				7A5745AE259F7B4B00AA5CB7 /* View */,
 				7A574585259F6D4B00AA5CB7 /* utils */,
@@ -217,6 +220,14 @@
 				51AB56C3271C61130FA074D0 /* Pods-Notes.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D2BFAA5025BC3D6700355603 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D2BFAA4C25BC394700355603 /* Extensions+UIImage.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +380,7 @@
 				7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */,
 				7A5745DB259FAA3400AA5CB7 /* EditNoteView.swift in Sources */,
 				7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */,
+				D2BFAA4D25BC394700355603 /* Extensions+UIImage.swift in Sources */,
 				ADAC5DC9240AC8DA0079EB30 /* SceneDelegate.swift in Sources */,
 				7A65C0C825A34F2900D03125 /* FoldersListElement.swift in Sources */,
 				7AA53A8225A1F7F400416348 /* firestore.swift in Sources */,
@@ -515,7 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Notes/Preview Content\"";
-				DEVELOPMENT_TEAM = J7C6ZTUA23;
+				DEVELOPMENT_TEAM = BS3RF78T3U;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Notes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -523,7 +535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ios-note";
+				PRODUCT_BUNDLE_IDENTIFIER = "ios-note123123";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
