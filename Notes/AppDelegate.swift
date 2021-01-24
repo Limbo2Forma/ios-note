@@ -40,5 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, FUIAuthDelegate {
             annotation: options[UIApplication.OpenURLOptionsKey.annotation]
         )
     }
+    var myOrientation: UIInterfaceOrientationMask = .portrait
+        func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+            return myOrientation
+        }
 }
     
