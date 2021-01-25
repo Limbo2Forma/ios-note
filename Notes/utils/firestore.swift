@@ -178,6 +178,7 @@ class FirestoreDb : ObservableObject {
             return n.pinned
         }
     }
+    
     func dateStringInMilliseconds(_ dateString: String) -> Int {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat = "dd-MM-yy hh:mm a"
@@ -297,7 +298,7 @@ class FirestoreDb : ObservableObject {
         return false
     }
     
-    func pinNote(note: Note) -> Bool{
+    func pinNote(note: Note) -> Bool {
         self.db!.collection("notes").document(note.id).updateData([
             "pinned": !note.pinned
         ]) { (err) in

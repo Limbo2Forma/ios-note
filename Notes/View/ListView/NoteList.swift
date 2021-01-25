@@ -29,34 +29,40 @@ struct NoteList: View {
         VStack {
             SearchBar(text: $searchKeyword)
             List {
-                if hasPinnedNote {
-                    Text("Pin Notes: ")
-                    ForEach(data.getNotesInFolder(folderName: title).filter {
-                        $0.pinned
-                    }) { i in
-                        ListElement(note: i, folderName: title)
-                    }
-                    .onDelete(perform: deleteRow)
-                    
-                    Color.gray
-                        .frame(height: 1)
-                        .frame(maxWidth: .infinity)
-                }
-            
-                if (title != "All") {
-                    ForEach(data.getNotesInFolder(folderName: title).filter {
-                        ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
-                    }) { i in
-                        ListElement(note: i, folderName: title)
-                    }
-                    .onDelete(perform: deleteRow)
-                } else {
-                    ForEach(data.getNotesInFolder(folderName: title).filter {
-                        ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
-                    }) { i in
-                        ListElement(note: i, folderName: title)
+                Section(header: Text("Pinned Notes")) {
+                    if (title != "All") {
+                        ForEach(data.getNotesInFolder(folderName: title).filter {
+                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned
+                        }) { i in
+                            ListElement(note: i, folderName: title)
+                        }
+                        .onDelete(perform: deleteRow)
+                    } else {
+                        ForEach(data.getNotesInFolder(folderName: title).filter {
+                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned
+                        }) { i in
+                            ListElement(note: i, folderName: title)
+                        }
                     }
                 }
+                .textCase(nil)
+                Section(header: Text("Unpinned Notes")) {
+                    if (title != "All") {
+                        ForEach(data.getNotesInFolder(folderName: title).filter {
+                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
+                        }) { i in
+                            ListElement(note: i, folderName: title)
+                        }
+                        .onDelete(perform: deleteRow)
+                    } else {
+                        ForEach(data.getNotesInFolder(folderName: title).filter {
+                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
+                        }) { i in
+                            ListElement(note: i, folderName: title)
+                        }
+                    }
+                }
+                .textCase(nil)
             }
             .sheet(isPresented: $showAddNoteToFolder, content: {
                 NavigationView {
@@ -88,6 +94,26 @@ struct NoteList: View {
                     }
                 })
         }
+    }
+    
+    private func generateSection(header: String, isPin: Bool) -> Section<Any, Any, Any> {
+        return Section(header: Text(header)) {
+            if (title != "All") {
+                ForEach(data.getNotesInFolder(folderName: title).filter {
+                    ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned == isPin
+                }) { i in
+                    ListElement(note: i, folderName: title)
+                }
+                .onDelete(perform: deleteRow)
+            } else {
+                ForEach(data.getNotesInFolder(folderName: title).filter {
+                    ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned == isPin
+                }) { i in
+                    ListElement(note: i, folderName: title)
+                }
+            }
+        }
+        .textCase(nil) as! Section<Any, Any, Any>
     }
     
     private func deleteRow(at offsets: IndexSet) {
