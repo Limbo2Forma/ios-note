@@ -19,20 +19,40 @@ struct NoteList: View {
     @State var searchKeyword : String = ""
     @State var showAddNoteToFolder = false
     
+    private var hasPinnedNote: Bool {
+        return data.getNotesInFolder(folderName: title).contains {
+            $0.pinned
+        }
+    }
+    
     var body: some View {
         VStack {
             SearchBar(text: $searchKeyword)
             List {
+                if hasPinnedNote {
+                    Text("Pin Notes: ")
+                    ForEach(data.getNotesInFolder(folderName: title).filter {
+                        $0.pinned
+                    }) { i in
+                        ListElement(note: i, folderName: title)
+                    }
+                    .onDelete(perform: deleteRow)
+                    
+                    Color.gray
+                        .frame(height: 1)
+                        .frame(maxWidth: .infinity)
+                }
+            
                 if (title != "All") {
                     ForEach(data.getNotesInFolder(folderName: title).filter {
-                        self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())
+                        ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
                     }) { i in
                         ListElement(note: i, folderName: title)
                     }
                     .onDelete(perform: deleteRow)
                 } else {
                     ForEach(data.getNotesInFolder(folderName: title).filter {
-                        self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())
+                        ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
                     }) { i in
                         ListElement(note: i, folderName: title)
                     }

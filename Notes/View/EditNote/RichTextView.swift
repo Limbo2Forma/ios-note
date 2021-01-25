@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import Combine
 import RichEditorView
+import FirebaseStorage
 
 struct TextEditorView: UIViewControllerRepresentable {
     var initContent: String
@@ -48,11 +49,24 @@ class Coordinator: NSObject, RichEditorDelegate {
     func richEditor(_ editor: RichEditorView, handleCustomAction content: String) { }
 }
 
-class EditorViewController: UIViewController {
+class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     var editorView = RichEditorView()
     var isTextColor = true
     var noteContent = String()
     var richEditorViewDelegate: RichEditorDelegate? = nil
+    
+    var url: String = ""
+    var attachmentName: String = ""
+    
+    private lazy var pickerController : UIImagePickerController = {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.allowsEditing = true
+        pickerController.mediaTypes = ["public.image", "public.movie"]
+        pickerController.sourceType = .photoLibrary
+        return pickerController
+    }()
     
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
@@ -88,6 +102,51 @@ class EditorViewController: UIViewController {
         self.view.addSubview(toolbar)
         toolbar.frame.origin.y = self.view.frame.size.height - 215 - toolbar.frame.size.height
     }
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        pickerController.dismiss(animated: true, completion: nil)
+        // upload image to server and get url here
+        // toolbar.editor?.insertImage("", alt: "")
+        let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        
+        if let originalImage = originalImage {
+            if let resziedImage = originalImage.resized(width: view.bounds.width) {
+                if let data = resziedImage.pngData() {
+                    uploadPhoto(data: data) {(url) in
+                        if let url = url {
+                            self.attachmentName = UUID().uuidString
+                            self.url = url.absoluteString
+                            self.toolbar.editor?.insertImage(self.url, alt: self.attachmentName)
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    func uploadPhoto(data: Data, completion: @escaping (URL?)-> Void) {
+        let imageName = UUID().uuidString
+        let storageRef = Storage.storage().reference()
+        let photoRef = storageRef.child("images/\(imageName).png")
+        
+        photoRef.putData(data, metadata: nil) { metadata, error in
+            photoRef.downloadURL { (url, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("upload at \(String(describing: url?.absoluteString))")
+                    completion(url)
+                }
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        pickerController.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewControllerDelegate {
@@ -134,8 +193,10 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
 
     func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar) {
         // do insert image here, get url
+        self.present(pickerController, animated: true, completion: nil)
         
-        toolbar.editor?.insertImage("https://avatars2.githubusercontent.com/u/10981?s=60", alt: "Gravatar")
+//        toolbar.editor?.insertImage("https://avatars2.githubusercontent.com/u/10981?s=60", alt: "Gravatar")
+        
     }
 
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {

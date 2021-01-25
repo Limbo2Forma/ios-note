@@ -23,19 +23,19 @@ struct FoldersView: View {
         List {
             HStack {
                 TextField("Create New Folder", text: $newFolder,
-                    onCommit: {
-                        if (!newFolder.isEmpty) {
-                            if data.addFolder(folderName: newFolder) {
-                                self.newFolder = ""
-                                return
+                          onCommit: {
+                            if (!newFolder.isEmpty) {
+                                if data.addFolder(folderName: newFolder) {
+                                    self.newFolder = ""
+                                    return
+                                }
                             }
-                        }
-                        self.showAddFolderError = true
-                    })
-                .padding(10)
-                .alert(isPresented: $showAddFolderError) {
-                    Alert(title: Text("Folder exist or empty name"), dismissButton: .default(Text("Got it!")))
-                }
+                            self.showAddFolderError = true
+                          })
+                    .padding(10)
+                    .alert(isPresented: $showAddFolderError) {
+                        Alert(title: Text("Folder exist or empty name"), dismissButton: .default(Text("Got it!")))
+                    }
                 Spacer()
             }
             ForEach(data.getFolders(), id: \.self) { i in
@@ -48,14 +48,14 @@ struct FoldersView: View {
         .navigationBarTitle(Text("Notes"), displayMode: .inline)
         .alert(isPresented: $showDeleteConfirm) {
             Alert(title: Text("Are you sure you want to delete this?"), message: Text("There is no undo"),
-                primaryButton: .destructive(Text("Delete")) {
+                  primaryButton: .destructive(Text("Delete")) {
                     data.removeFolder(folderName: deleteFolderName)
                     deleteFolderName = ""
-                },
-                secondaryButton: .cancel() {
+                  },
+                  secondaryButton: .cancel() {
                     self.showDeleteConfirm = false
-                })
-            }
+                  })
+        }
         .navigationBarItems(leading:
                                 Button(action: {
                                     let firebaseAuth = Auth.auth()
