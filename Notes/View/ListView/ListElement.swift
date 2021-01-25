@@ -35,6 +35,15 @@ struct ListElement: View {
                     }
                     .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
                 }
+                Spacer()
+                Button(action: {
+                    data.pinNote(note: note)
+                }) {
+                    Image(systemName: note.pinned ? "pin.fill" : "pin").resizable().frame(width: 18, height: 23)
+                        .foregroundColor(Color.blue)
+                        .font(Font.title.weight(.thin))
+                        .rotationEffect(Angle(degrees: 90))
+                }.buttonStyle(PlainButtonStyle())
             }
         }
     }

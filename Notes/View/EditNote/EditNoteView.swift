@@ -35,37 +35,29 @@ struct EditNoteView : View {
         .sheet(isPresented: $isShareToSocialMedia, content: {
             ActivityViewController(activityItems: [note!.title, note!.content])
         })
+        .onDisappear(perform: {
+            if (note == nil) {
+                data.createNote(title: self.title, content: self.noteContent, destination: destination)
+            } else {
+                var noteUpdate = self.note
+                noteUpdate?.title = self.title
+                noteUpdate?.content = self.noteContent
+                data.updateNote(note: noteUpdate!)
+            }
+        })
         .navigationBarItems(trailing:
             HStack(spacing: 20) {
                 if (note != nil) {
-                    Button(action: { self.isShareToSocialMedia.toggle()}) {
-                        Image(systemName: "square.and.arrow.up.on.square.fill")
-                            .foregroundColor(Color.blue)
-                    }
-                    
                     Button(action: { self.showAddNoteToFolder = true }) {
                         Image(systemName: "note.text.badge.plus")
-                            .foregroundColor(Color.blue)
+                            .resizable().frame(width: 26, height: 23).foregroundColor(Color.blue)
+                                .font(Font.title.weight(.thin))
                     }
-                    
-                    Button(action: { data.pinNote(note: note!) }) {
-                        Image(systemName: "pin.circle.fill")
-                            .foregroundColor(Color.blue)
-                        
+                    Button(action: { self.isShareToSocialMedia.toggle()}) {
+                        Image(systemName: "square.and.arrow.up.on.square.fill")
+                            .resizable().frame(width: 23, height: 26).foregroundColor(Color.blue)
+                                .font(Font.title.weight(.thin))
                     }
-                }
-                Button(action: {
-                    if (note == nil) {
-                        data.createNote(title: self.title, content: self.noteContent, destination: destination)
-                    } else {
-                        var noteUpdate = self.note
-                        noteUpdate?.title = self.title
-                        noteUpdate?.content = self.noteContent
-                        data.updateNote(note: noteUpdate!)
-                    }
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "checkmark").resizable().frame(width: 26, height: 23).foregroundColor(Color.blue).font(Font.title.weight(.thin))
                 }
             })
     }
