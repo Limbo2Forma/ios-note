@@ -47,12 +47,6 @@ struct EditNoteView : View {
                         Image(systemName: "note.text.badge.plus")
                             .foregroundColor(Color.blue)
                     }
-                    
-                    Button(action: { data.pinNote(note: note!) }) {
-                        Image(systemName: "pin.circle.fill")
-                            .foregroundColor(Color.blue)
-                        
-                    }
                 }
                 Button(action: {
                     if (note == nil) {

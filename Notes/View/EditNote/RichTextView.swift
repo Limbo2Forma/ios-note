@@ -97,6 +97,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         options.append(item)
         toolbar.options = options
         
+      
         // add note title textview heres
         self.view.addSubview(editorView)
         self.view.addSubview(toolbar)
@@ -111,7 +112,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
         if let originalImage = originalImage {
-            if let resziedImage = originalImage.resized(width: view.bounds.width) {
+            if let resziedImage = originalImage.resized(width: view.frame.width - 40) {
                 if let data = resziedImage.pngData() {
                     uploadPhoto(data: data) {(url) in
                         if let url = url {

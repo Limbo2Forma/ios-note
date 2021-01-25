@@ -35,6 +35,10 @@ struct ListElement: View {
                     }
                     .accentColor(self.colorScheme == .dark ? Color.white : Color.black)
                 }
+                Image(systemName: note.pinned ? "pin.slash" : "pin")
+                    .onTapGesture {
+                        data.pinNote(note: note)
+                    }
             }
         }
     }
