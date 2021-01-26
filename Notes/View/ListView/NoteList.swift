@@ -1,11 +1,13 @@
-//
-//  NoteList.swift
-//  Notes
-//
-//  Created by A friend on 1/3/21.
-//  Copyright © 2021 Balaji. All rights reserved.
-//
-
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 import SwiftUI
 
 struct NoteList: View {
@@ -115,7 +117,7 @@ struct NoteList: View {
         }
         .textCase(nil) as! Section<Any, Any, Any>
     }
-    
+    // delete the note in the app
     private func deleteRow(at offsets: IndexSet) {
         self.deleteNote = data.getNotesInFolder(folderName: title)[offsets.first!]
         if (title != "All") {

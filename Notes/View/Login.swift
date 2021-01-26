@@ -1,3 +1,13 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 import SwiftUI
 import FirebaseUI
 import Firebase
@@ -34,14 +44,15 @@ struct Login : View {
     }
 }
 
+// Use a UIViewControllerRepresentable instance to create and manage a UIViewController object in your SwiftUI interface
 struct CustomLoginViewController : UIViewControllerRepresentable {
     
     var dismiss : (_ error : Error? ) -> Void
-    
+    //Creates the custom instance that you use to communicate changes from your view controller to other parts of your SwiftUI interface.
     func makeCoordinator() -> CustomLoginViewController.Coordinator {
         Coordinator(self)
     }
-    
+    //Creates the view controller object and configures its initial state
     func makeUIViewController(context: Context) -> UIViewController
     {
         let authUI = FUIAuth.defaultAuthUI()
@@ -58,7 +69,7 @@ struct CustomLoginViewController : UIViewControllerRepresentable {
 
         return authViewController!
     }
-    
+    //Updates the state of the specified view controller with new information from SwiftUI.
     func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<CustomLoginViewController>)
     {
         

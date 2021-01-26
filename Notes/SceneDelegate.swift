@@ -1,10 +1,13 @@
-//
-//  SceneDelegate.swift
-//  Notes
-//
-//  Created by Kavsoft on 29/02/20.
-//  Copyright © 2020 Kavsoft. All rights reserved.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 
 import UIKit
 import SwiftUI
@@ -44,7 +47,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             let fdb = FirestoreDb()
             fdb.listen()
-//            window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
             if Auth.auth().currentUser == nil {
                 print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))

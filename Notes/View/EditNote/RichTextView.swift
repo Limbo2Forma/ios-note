@@ -1,3 +1,13 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 import UIKit
 import SwiftUI
 import Combine
@@ -7,18 +17,18 @@ import FirebaseStorage
 struct TextEditorView: UIViewControllerRepresentable {
     var initContent: String
     @Binding var noteContent: String
-    
+    //Creates the custom instance that you use to communicate changes from your view controller to other parts of your SwiftUI interface.
     func makeCoordinator() -> Coordinator {
         return Coordinator(noteContent: $noteContent)
     }
-    
+    //Creates the view controller object and configures its initial state
     func makeUIViewController(context: Context) -> EditorViewController {
         let editorView = EditorViewController()
         editorView.noteContent = initContent
         editorView.richEditorViewDelegate = context.coordinator
         return editorView
     }
-
+    //Updates the state of the specified view controller with new information from SwiftUI.
     func updateUIViewController(_ uiViewController: EditorViewController, context: Context){
     }
 }
@@ -48,7 +58,8 @@ class Coordinator: NSObject, RichEditorDelegate {
 
     func richEditor(_ editor: RichEditorView, handleCustomAction content: String) { }
 }
-
+// A set of methods that your delegate object must implement to interact with the image picker interface.
+// Navigation controller delegate to modify behavior when a view controller is pushed or popped from the navigation stack
 class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var editorView = RichEditorView()
@@ -67,7 +78,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         pickerController.sourceType = .photoLibrary
         return pickerController
     }()
-    
+    // the toolbar for user easy to edit the text in the note
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
         toolbar.options = RichEditorDefaultOption.all
@@ -104,11 +115,11 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         toolbar.frame.origin.y = self.view.frame.size.height - 215 - toolbar.frame.size.height
     }
     
-    
+    // This function help user import the phote to the note by local photo book
+    //The controller object managing the image picker interface.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         pickerController.dismiss(animated: true, completion: nil)
         // upload image to server and get url here
-        // toolbar.editor?.insertImage("", alt: "")
         let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
         if let originalImage = originalImage {
@@ -143,7 +154,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
             }
         }
     }
-    
+    //Tells the delegate that the user cancelled the pick operation.
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         pickerController.dismiss(animated: true, completion: nil)
     }
@@ -162,7 +173,8 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
         
         present(picker, animated: true, completion: nil)
     }
-    
+    /*Using this on a UIImage that is a property of a UIImageView the pixel coordinates are those of the actual image in its original resolution, not the screen coordinates of the scaled UIImageView.
+     Also it tried with RGB Jpg and RGBA PNG and the both get imported as 32 bit RGBA images so it works for both.*/
     private func getRGBA(from color: UIColor) -> [CGFloat] {
         var R: CGFloat = 0
         var G: CGFloat = 0
@@ -174,6 +186,7 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
         return [R, G, B, A]
     }
     
+    // Check the color set for a background on a UIImageView
     private func isBlackOrWhite(_ color: UIColor) -> Bool {
         let RGBA = getRGBA(from: color)
         let isBlack = RGBA[0] < 0.09 && RGBA[1] < 0.09 && RGBA[2] < 0.09
@@ -195,11 +208,10 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
     func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar) {
         // do insert image here, get url
         self.present(pickerController, animated: true, completion: nil)
-        
-//        toolbar.editor?.insertImage("https://avatars2.githubusercontent.com/u/10981?s=60", alt: "Gravatar")
-        
+                
     }
 
+    // the function of change color in the toolbar of note
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         var color: UIColor? = viewController.selectedColor
         

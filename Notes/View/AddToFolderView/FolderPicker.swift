@@ -1,10 +1,13 @@
-//
-//  FolderPicker.swift
-//  Notes
-//
-//  Created by A friend on 1/16/21.
-//  Copyright © 2021 Balaji. All rights reserved.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 
 import SwiftUI
 
@@ -33,6 +36,7 @@ struct FolderPicker: View {
                 })
             }
         }
+        // create the navigation bar 
         .navigationBarTitle(Text("Add to folder"), displayMode: .inline)
         .navigationBarItems(trailing:
                                 Button(action: {
