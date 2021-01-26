@@ -11,7 +11,7 @@
 import SwiftUI
 
 struct NoteList: View {
-
+    // declare the variable
     var title: String
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb
@@ -20,7 +20,7 @@ struct NoteList: View {
     @State var deleteNote: Note? = nil
     @State var searchKeyword : String = ""
     @State var showAddNoteToFolder = false
-    
+    // pin note in note list
     private var hasPinnedNote: Bool {
         return data.getNotesInFolder(folderName: title).contains {
             $0.pinned
@@ -81,7 +81,7 @@ struct NoteList: View {
                 })
         }
     }
-    
+    // Two sections in spinner item list, with different section header layout and items layout
     private func generateSection(header: String, isPin: Bool) -> Section<Any, Any, Any> {
         return Section(header: Text(header)) {
             if (title != "All") {

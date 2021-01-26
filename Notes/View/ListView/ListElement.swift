@@ -13,6 +13,7 @@ import SwiftUI
 import Firebase
 
 struct ListElement: View {
+    // declare the variable 
     var note: Note
     var folderName: String
     

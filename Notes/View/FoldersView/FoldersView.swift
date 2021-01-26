@@ -12,6 +12,7 @@ import SwiftUI
 import Firebase
 
 struct FoldersView: View {
+    // declare the variable 
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb
     

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct FolderPicker: View {
+    // declare the variable 
     var note: Note
     var folders: [String]
     @Binding var showPicker: Bool
@@ -34,6 +35,7 @@ struct FolderPicker: View {
                     })
                 }
             }
+            // Navigation bar for folder side
             .navigationBarTitle(Text("Add to folder"), displayMode: .inline)
             .navigationBarItems(trailing:
                                     Button(action: {

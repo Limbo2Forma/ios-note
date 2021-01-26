@@ -11,6 +11,7 @@
 import SwiftUI
 
 struct NotePicker: View {
+    // declare the variable 
     var title: String
     var notes: [Note]
     @Binding var showPicker: Bool

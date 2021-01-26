@@ -12,7 +12,7 @@
 import SwiftUI
 
 struct PopActionMenu: View {
-    
+    // declare the variable 
     @Binding var editMode: EditMode
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var data: FirestoreDb

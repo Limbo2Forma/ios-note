@@ -8,6 +8,7 @@
   Last modified: 26/01/2020
   Acknowledgement: Acknowledge the resources that you use here. 
 */
+
 import SwiftUI
 import Firebase
 
@@ -40,6 +41,7 @@ struct EditNoteView : View {
             self.title = note?.title ?? ""
             data.resetRedirect()
         }
+// create the new note
         .navigationBarTitle(Text(note?.title ?? "New Note"), displayMode: .inline) // title navigation bar
         .edgesIgnoringSafeArea(.bottom)
         .sheet(isPresented: $showSheet, content: {
