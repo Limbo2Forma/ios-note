@@ -36,10 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             fdb.listen()
-<<<<<<< HEAD
 
-=======
->>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
             if Auth.auth().currentUser == nil {
                 print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))

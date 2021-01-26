@@ -57,28 +57,19 @@ struct EditNoteView : View {
         .navigationBarItems(trailing:
             HStack(spacing: 20) {
                 if (note != nil) {
-<<<<<<< HEAD
                     Button(action: {
                         self.showSheet = true
                         self.isShareToSocialMedia = false
                     }) {
-=======
-                    // create the button for add note to folder
-                    Button(action: { self.showAddNoteToFolder = true }) {
->>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
                         Image(systemName: "note.text.badge.plus")
                             .resizable().frame(width: 26, height: 23).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))
                     }
-<<<<<<< HEAD
                     Button(action: {
                         self.showSheet.toggle()
                         self.isShareToSocialMedia = true
                     }) {
-=======
                     // create the button for share the note in social media such as facebook, whatApps, ...
-                    Button(action: { self.isShareToSocialMedia.toggle()}) {
->>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
                         Image(systemName: "square.and.arrow.up.on.square.fill")
                             .resizable().frame(width: 23, height: 23).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))

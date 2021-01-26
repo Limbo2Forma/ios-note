@@ -207,11 +207,6 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
     func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar) {
         // do insert image here, get url
         self.present(pickerController, animated: true, completion: nil)
-<<<<<<< HEAD
-        
-=======
-                
->>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
     }
 
     // the function of change color in the toolbar of note
