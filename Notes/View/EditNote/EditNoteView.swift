@@ -12,9 +12,11 @@ struct EditNoteView : View {
     
     @State private var title = ""
     @State private var noteContent = ""
-    @State var showAddNoteToFolder = false
+    
+    @State var showSheet = false
     @State var isShareToSocialMedia = false
-    var body : some View{
+    
+    var body : some View {
         VStack() {
             TextField("Note Title", text: $title)
                 .padding(10)
@@ -24,55 +26,42 @@ struct EditNoteView : View {
         }
         .onAppear {
             self.title = note?.title ?? ""
+            data.resetRedirect()
         }
         .navigationBarTitle(Text(note?.title ?? "New Note"), displayMode: .inline)
         .edgesIgnoringSafeArea(.bottom)
-        .sheet(isPresented: $showAddNoteToFolder, content: {
-            NavigationView {
-                FolderPicker(note: note!,folders: data.folders, showPicker: $showAddNoteToFolder)
-            }
-        })
-        .sheet(isPresented: $isShareToSocialMedia, content: {
-            ActivityViewController(activityItems: [note!.title, note!.content])
+        .sheet(isPresented: $showSheet, content: {
+            ShowSheet(note: note!, folders: data.folders, showPicker: $showSheet, isShareToSocialMedia: $isShareToSocialMedia)
         })
         .onDisappear(perform: {
-            if (note == nil) {
-                data.createNote(title: self.title, content: self.noteContent, destination: destination)
+            if var noteUpdate = self.note {
+                noteUpdate.title = self.title == "" ? noteUpdate.title : self.title
+                noteUpdate.content = self.noteContent
+                data.updateNote(note: noteUpdate)
             } else {
-                var noteUpdate = self.note
-                noteUpdate?.title = self.title
-                noteUpdate?.content = self.noteContent
-                data.updateNote(note: noteUpdate!)
+                data.createNote(title: self.title == "" ? "new note" : self.title, content: self.noteContent, destination: destination)
             }
         })
         .navigationBarItems(trailing:
             HStack(spacing: 20) {
                 if (note != nil) {
-                    Button(action: { self.showAddNoteToFolder = true }) {
+                    Button(action: {
+                        self.showSheet = true
+                        self.isShareToSocialMedia = false
+                    }) {
                         Image(systemName: "note.text.badge.plus")
                             .resizable().frame(width: 26, height: 23).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))
                     }
-                    Button(action: { self.isShareToSocialMedia.toggle()}) {
+                    Button(action: {
+                        self.showSheet.toggle()
+                        self.isShareToSocialMedia = true
+                    }) {
                         Image(systemName: "square.and.arrow.up.on.square.fill")
-                            .resizable().frame(width: 23, height: 26).foregroundColor(Color.blue)
+                            .resizable().frame(width: 23, height: 23).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))
                     }
                 }
             })
     }
-}
-
-struct ActivityViewController: UIViewControllerRepresentable {
-    
-    var activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
-    
 }

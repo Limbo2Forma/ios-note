@@ -4,13 +4,11 @@
 target 'Notes' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  inhibit_all_warnings!
   # Pods for Notes
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Auth'
-  pod 'FBSDKShareKit'
   pod 'FirebaseUI'
-  
   pod 'RichEditorView', :git => 'https://github.com/cbess/RichEditorView.git'
 end

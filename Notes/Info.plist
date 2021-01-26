@@ -19,10 +19,20 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key></key>
+			<string></string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.iosnote</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb4120560744625471</string>
+				<string>iosnotegroup1</string>
 			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

@@ -121,7 +121,6 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
                             self.toolbar.editor?.insertImage(self.url, alt: self.attachmentName)
                         }
                     }
-                    
                 }
             }
         }
@@ -195,8 +194,6 @@ extension EditorViewController: RichEditorToolbarDelegate, UIColorPickerViewCont
     func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar) {
         // do insert image here, get url
         self.present(pickerController, animated: true, completion: nil)
-        
-//        toolbar.editor?.insertImage("https://avatars2.githubusercontent.com/u/10981?s=60", alt: "Gravatar")
         
     }
 

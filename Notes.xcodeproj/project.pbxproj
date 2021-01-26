@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3BA42E4EDDFD2D041D700904 /* Pods_Notes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F86FB09E0F8CB5DAF9C343E /* Pods_Notes.framework */; };
+		7A30D4C825C00CA8003E3039 /* SharedToView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A30D4C725C00CA8003E3039 /* SharedToView.swift */; };
 		7A57457E259F6CFC00AA5CB7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A57457D259F6CFC00AA5CB7 /* GoogleService-Info.plist */; };
 		7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745B8259F7CD100AA5CB7 /* Note.swift */; };
 		7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5745D0259F9A6300AA5CB7 /* ListElement.swift */; };
@@ -16,7 +17,6 @@
 		7A92606625B2E3F100E10F61 /* FolderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A92606525B2E3F100E10F61 /* FolderPicker.swift */; };
 		7A92606A25B2E40200E10F61 /* NotePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A92606925B2E40200E10F61 /* NotePicker.swift */; };
 		7A92606E25B2E59A00E10F61 /* FoldersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A92606D25B2E59900E10F61 /* FoldersView.swift */; };
-		7A92607225B2F3B000E10F61 /* PinnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A92607125B2F3B000E10F61 /* PinnedView.swift */; };
 		7A92607625B301E000E10F61 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A92607525B301E000E10F61 /* SearchBar.swift */; };
 		7AA53A8225A1F7F400416348 /* firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8125A1F7F400416348 /* firestore.swift */; };
 		7AA53A8625A1FA7900416348 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA53A8525A1FA7900416348 /* NoteList.swift */; };
@@ -35,6 +35,8 @@
 
 /* Begin PBXFileReference section */
 		51AB56C3271C61130FA074D0 /* Pods-Notes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notes.release.xcconfig"; path = "Target Support Files/Pods-Notes/Pods-Notes.release.xcconfig"; sourceTree = "<group>"; };
+		7A30D4C125C007F8003E3039 /* Notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notes.entitlements; sourceTree = "<group>"; };
+		7A30D4C725C00CA8003E3039 /* SharedToView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedToView.swift; sourceTree = "<group>"; };
 		7A57457D259F6CFC00AA5CB7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7A5745B8259F7CD100AA5CB7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		7A5745D0259F9A6300AA5CB7 /* ListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListElement.swift; sourceTree = "<group>"; };
@@ -43,7 +45,6 @@
 		7A92606525B2E3F100E10F61 /* FolderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPicker.swift; sourceTree = "<group>"; };
 		7A92606925B2E40200E10F61 /* NotePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePicker.swift; sourceTree = "<group>"; };
 		7A92606D25B2E59900E10F61 /* FoldersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersView.swift; sourceTree = "<group>"; };
-		7A92607125B2F3B000E10F61 /* PinnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedView.swift; sourceTree = "<group>"; };
 		7A92607525B301E000E10F61 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		7AA53A8125A1F7F400416348 /* firestore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firestore.swift; sourceTree = "<group>"; };
 		7AA53A8525A1FA7900416348 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
@@ -96,9 +97,7 @@
 		7A5745AE259F7B4B00AA5CB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7A92607425B2F8E800E10F61 /* PinnedView */,
 				7A92606C25B2E58300E10F61 /* FoldersView */,
-				7A92606425B2E3C900E10F61 /* AddToFolderView */,
 				7ADC147525B05A1C0024AD78 /* MinorView */,
 				7ADC147325B059D50024AD78 /* ListView */,
 				7ADC147225B059BA0024AD78 /* EditNote */,
@@ -116,15 +115,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		7A92606425B2E3C900E10F61 /* AddToFolderView */ = {
-			isa = PBXGroup;
-			children = (
-				7A92606525B2E3F100E10F61 /* FolderPicker.swift */,
-				7A92606925B2E40200E10F61 /* NotePicker.swift */,
-			);
-			path = AddToFolderView;
-			sourceTree = "<group>";
-		};
 		7A92606C25B2E58300E10F61 /* FoldersView */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,19 +124,12 @@
 			path = FoldersView;
 			sourceTree = "<group>";
 		};
-		7A92607425B2F8E800E10F61 /* PinnedView */ = {
-			isa = PBXGroup;
-			children = (
-				7A92607125B2F3B000E10F61 /* PinnedView.swift */,
-			);
-			path = PinnedView;
-			sourceTree = "<group>";
-		};
 		7ADC147225B059BA0024AD78 /* EditNote */ = {
 			isa = PBXGroup;
 			children = (
 				7A5745DA259FAA3400AA5CB7 /* EditNoteView.swift */,
 				7ABFEC3B25A56EAD0029B942 /* RichTextView.swift */,
+				7A30D4C725C00CA8003E3039 /* SharedToView.swift */,
 			);
 			path = EditNote;
 			sourceTree = "<group>";
@@ -164,6 +147,8 @@
 		7ADC147525B05A1C0024AD78 /* MinorView */ = {
 			isa = PBXGroup;
 			children = (
+				7A92606525B2E3F100E10F61 /* FolderPicker.swift */,
+				7A92606925B2E40200E10F61 /* NotePicker.swift */,
 				7AF769B825A4F2CC0089C0D7 /* PopActionMenu.swift */,
 			);
 			path = MinorView;
@@ -190,6 +175,7 @@
 		ADAC5DC5240AC8DA0079EB30 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				7A30D4C125C007F8003E3039 /* Notes.entitlements */,
 				D2BFAA5025BC3D6700355603 /* Extensions */,
 				7A5745B7259F7CAB00AA5CB7 /* Model */,
 				7A5745AE259F7B4B00AA5CB7 /* View */,
@@ -369,13 +355,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7AF769B925A4F2CC0089C0D7 /* PopActionMenu.swift in Sources */,
+				7A30D4C825C00CA8003E3039 /* SharedToView.swift in Sources */,
 				7A5745B9259F7CD100AA5CB7 /* Note.swift in Sources */,
 				7AF7694925A36ED40089C0D7 /* Login.swift in Sources */,
 				7A92606A25B2E40200E10F61 /* NotePicker.swift in Sources */,
 				ADAC5DC7240AC8DA0079EB30 /* AppDelegate.swift in Sources */,
 				7A92607625B301E000E10F61 /* SearchBar.swift in Sources */,
 				7AC9228425A31E38002919B7 /* util.swift in Sources */,
-				7A92607225B2F3B000E10F61 /* PinnedView.swift in Sources */,
 				7A92606E25B2E59A00E10F61 /* FoldersView.swift in Sources */,
 				7A5745D1259F9A6300AA5CB7 /* ListElement.swift in Sources */,
 				7A5745DB259FAA3400AA5CB7 /* EditNoteView.swift in Sources */,
@@ -525,6 +511,8 @@
 			baseConfigurationReference = BC5A8C0EF068FB34E18DEE68 /* Pods-Notes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Notes/Notes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Notes/Preview Content\"";
 				DEVELOPMENT_TEAM = J7C6ZTUA23;
@@ -537,6 +525,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ios-note";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -547,6 +536,8 @@
 			baseConfigurationReference = 51AB56C3271C61130FA074D0 /* Pods-Notes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Notes/Notes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Notes/Preview Content\"";
 				DEVELOPMENT_TEAM = J7C6ZTUA23;
@@ -559,6 +550,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ios-note";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

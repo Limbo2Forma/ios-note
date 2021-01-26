@@ -18,6 +18,8 @@ class FirestoreDb : ObservableObject {
     @Published var folders = [String]()
     @Published var currentNoteContent = String()
     @Published var currentUser: User? = nil
+    @Published var redirectedAll: String? = nil
+    @Published var redirectedId: String? = nil
     
     var db: DocumentReference? = nil
     let format = DateFormatter()
@@ -57,6 +59,10 @@ class FirestoreDb : ObservableObject {
         }
     }
     
+    func getSharedDeepLink(note: Note) -> [Any] {
+        return ["https://notetakingapp-a82e7.web.app://?ownerId=" + self.currentUser!.uid + "&noteId=" + note.id]
+    }
+    
     func detachDataListener() {
         print("Detach Listener")
         if self.noteListener != nil {
@@ -76,7 +82,7 @@ class FirestoreDb : ObservableObject {
         print("Attach Listener")
         self.db = Firestore.firestore().collection("users").document(user.uid)
         self.listenerExist = true
-        self.noteListener = self.db!.collection("notes").order(by: "date", descending: true).addSnapshotListener { (snap, err) in
+        self.noteListener = self.db!.collection("notes").addSnapshotListener { (snap, err) in
             
             if err != nil {
                 print((err?.localizedDescription)!)
@@ -91,74 +97,99 @@ class FirestoreDb : ObservableObject {
             
             for i in snap!.documentChanges {
                 if i.type == .added {
-                    
                     let id = i.document.documentID
-                    let title = i.document.get("title") as! String
                     let folders = i.document.get("folders") as! [String]
-                    let content = i.document.get("content") as! String
-                    let date = i.document.get("date") as! Timestamp
                     let pinned = i.document.get("pinned") as! Bool
                     
-                    self.format.dateFormat = "dd-MM-YY hh:mm a"
-                    let dateString = self.format.string(from: date.dateValue())
-                    
-                    let newNote = Note(id: id, title: title, folders: folders, content: content, date:dateString, pinned: pinned)
-                    self.notes.append(newNote)
+                    if let title = i.document.get("title") as? String {
+                        let content = i.document.get("content") as! String
+                        let date = i.document.get("date") as! Timestamp
+                        
+                        self.format.dateFormat = "dd-MM-YY hh:mm a"
+                        let dateString = self.format.string(from: date.dateValue())
+
+                        self.notes.append(Note(id: id, title: title, folders: folders, content: content, date:dateString, pinned: pinned))
+                    } else {
+                        let ref = i.document.get("ownerRef") as! DocumentReference
+                        ref.addSnapshotListener { documentSnapshot, error in
+                            guard let document = documentSnapshot else {
+                                print("Error fetching document: \(error!)")
+                                if let id = self.notes.firstIndex(where: {$0.id == i.document.documentID}) {
+                                    self.notes.remove(at: id)
+                                    if self.notes.isEmpty{
+                                        self.noData = true
+                                    }
+                                }
+                                return
+                            }
+                            if let data = document.data() {
+                                let title = data["title"] as! String
+                                let content = data["content"] as! String
+                                let date = data["date"] as! Timestamp
+                                    
+                                self.format.dateFormat = "dd-MM-YY hh:mm a"
+                                let dateString = self.format.string(from: date.dateValue())
+                                
+                                if let i = self.notes.firstIndex(where: {$0.id == id}) {
+                                    self.notes[i].title = title
+                                    self.notes[i].content = content
+                                    
+                                    self.format.dateFormat = "dd-MM-YY hh:mm a"
+                                    let dateString = self.format.string(from: date.dateValue())
+                                    
+                                    self.notes[i].date = dateString
+                                } else {
+                                    self.notes.append(Note(id: id, title: title, folders: folders, content: content, date:dateString, pinned: false))
+                                }
+                            } else {
+                                print("Document data was empty.")
+                            }
+                        }
+                    }
                 }
                 
                 if i.type == .modified {
-                    let id = i.document.documentID
-                    let title = i.document.get("title") as! String
+                    let id = self.notes.firstIndex(where: {$0.id == i.document.documentID})
                     let folders = i.document.get("folders") as! [String]
-                    let content = i.document.get("content") as! String
-                    let date = i.document.get("date") as! Timestamp
                     let pinned = i.document.get("pinned") as! Bool
                     
-                    for i in 0..<self.notes.count {
-                        if self.notes[i].id == id {
-                            self.notes[i].title = title
-                            self.notes[i].folders = folders
-                            self.notes[i].content = content
-                            self.notes[i].pinned = pinned
-                            
-                            self.format.dateFormat = "dd-MM-YY hh:mm a"
-                            let dateString = self.format.string(from: date.dateValue())
-                            
-                            self.notes[i].date = dateString
-                        }
+                    self.notes[id!].folders = folders
+                    self.notes[id!].pinned = pinned
+                    if let title = i.document.get("title") as? String {
+                        let content = i.document.get("content") as! String
+                        let date = i.document.get("date") as! Timestamp
+                        self.notes[id!].title = title
+                        self.notes[id!].content = content
+                        self.format.dateFormat = "dd-MM-YY hh:mm a"
+                        let dateString = self.format.string(from: date.dateValue())
+                        self.notes[id!].date = dateString
                     }
                 }
                 
                 if i.type == .removed{
-                    let id = i.document.documentID
-                    
-                    for i in 0..<self.notes.count {
-                        if self.notes[i].id == id {
-                            self.notes.remove(at: i)
-                            if self.notes.isEmpty{
-                                self.noData = true
-                            }
-                            return
+                    if let id = self.notes.firstIndex(where: {$0.id == i.document.documentID}) {
+                        self.notes.remove(at: id)
+                        if self.notes.isEmpty{
+                            self.noData = true
                         }
+                        return
                     }
                 }
             }
-            print("<><><>><><><><><><><>")
-            print(self.notes)
         }
         
         self.folderListener = self.db!.addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                let fd = document.get("folders")
-                if fd != nil {
-                    self.folders = fd as! [String]
-                }
-                print("<><><>><><><><><><><>")
-                print(self.folders)
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
             }
+            let fd = document.get("folders")
+            if fd != nil {
+                self.folders = fd as! [String]
+            }
+            print("<><><>><><><><><><><>")
+            print(self.folders)
+        }
     }
     
     func getFolders() -> [String] {
@@ -185,23 +216,10 @@ class FirestoreDb : ObservableObject {
         let date = dateFormater.date(from: dateString)
         return Int(date!.timeIntervalSince1970 * 1000)
     }
-//    func dateCompare(_ dateStr1: String, _ dateStr2: String) -> Bool {
-//        let dateFormater = DateFormatter()
-//        dateFormater.dateFormat = "dd-MM-yy hh:mm a"
-//        let date1 = dateFormater.date(from: dateStr1)! as Date
-//        let date2 = dateFormater.date(from: dateStr2)! as Date
-//        let ansiDateFormatter = DateFormatter()
-//        ansiDateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
-//        let ansiDateStr1 = ansiDateFormatter.string(from: date1)
-//        let ansiDateStr2 = ansiDateFormatter.string(from: date2)
-//        print("        \(ansiDateStr1) vs \(ansiDateStr1) : \(ansiDateStr1 > ansiDateStr2)")
-//        return ansiDateStr1 > ansiDateStr2
-//    }
+
     func getNotesInFolder(folderName: String) -> [Note] {
         return notes.sorted(by: { (note1, note2) -> Bool in
             let result = dateStringInMilliseconds(note1.date) > dateStringInMilliseconds(note2.date)
-//            let result = dateCompare(note1.date, note2.date)
-//            print("compare \(note1.date) vs \(note2.date) : \(result)")
             return result
         }).filter { n in
             return n.folders.contains(folderName)
@@ -298,7 +316,7 @@ class FirestoreDb : ObservableObject {
         return false
     }
     
-    func pinNote(note: Note) -> Bool {
+    func pinNote(note: Note) {
         self.db!.collection("notes").document(note.id).updateData([
             "pinned": !note.pinned
         ]) { (err) in
@@ -307,13 +325,9 @@ class FirestoreDb : ObservableObject {
                 return
             }
         }
-        return true
     }
     
-    func addNoteInFolder(note: Note, folderName: String) -> Bool{
-        if note.folders.contains(folderName) {
-            return false
-        }
+    func addNoteInFolder(note: Note, folderName: String) {
         var noteph = note.folders
         noteph.append(folderName)
         
@@ -325,7 +339,6 @@ class FirestoreDb : ObservableObject {
                 return
             }
         }
-        return true
     }
     
     func removeNoteInFolder(note: Note, folderName: String) {
@@ -354,15 +367,56 @@ class FirestoreDb : ObservableObject {
         }
     }
     
+    func createNote(ownerId: String, noteId: String) {
+        self.redirectedAll = "All"
+        self.redirectedId = noteId
+//        self.redirectedAll = "All"
+        print("redirect", redirectedAll, redirectedId)
+        
+        if self.currentUser!.uid != ownerId {
+            self.redirectedId = ownerId + "|" + noteId
+            db!.collection("notes").document(self.redirectedId!).setData([
+                "ownerRef": Firestore.firestore().collection("users").document(ownerId).collection("notes").document(noteId),
+                "folders": ["All"],
+                "pinned": false
+            ]) { (err) in
+                if err != nil{
+                    print((err?.localizedDescription)!)
+                    return
+                }
+            }
+        }
+        print("Owned already")
+    }
+//
+    func resetRedirect() {
+//        self.redirectedAll = nil
+//        self.redirectedId = nil
+    }
+    
     func updateNote(note: Note) {
-        self.db!.collection("notes").document(note.id).updateData([
-            "title": note.title,
-            "content": note.content,
-            "date": Date()
-        ]) { (err) in
-            if err != nil{
-                print((err?.localizedDescription)!)
-                return
+        if (note.id.contains("|")) {
+            let component = note.id.components(separatedBy: "|")
+            Firestore.firestore().collection("users").document(component[0]).collection("notes").document(component[1]).updateData([
+                    "title": note.title,
+                    "content": note.content,
+                    "date": Date()
+                ]) { (err) in
+                    if err != nil{
+                        print((err?.localizedDescription)!)
+                        return
+                    }
+                }
+        } else {
+            self.db!.collection("notes").document(note.id).updateData([
+                "title": note.title,
+                "content": note.content,
+                "date": Date()
+            ]) { (err) in
+                if err != nil{
+                    print((err?.localizedDescription)!)
+                    return
+                }
             }
         }
     }

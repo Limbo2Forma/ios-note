@@ -8,32 +8,22 @@
 
 import UIKit
 import SwiftUI
-import FBSDKCoreKit
 import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let fdb = FirestoreDb()
     
-    
-    // Swift
-    //
-    // SceneDelegate.swift
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else {
-            return
+        if let url = URLContexts.first?.url {
+            print(url)
+            let urlStr = url.absoluteString
+            let component = urlStr.components(separatedBy: "/")
+            fdb.createNote(ownerId: component[2], noteId: component[3])
         }
-        
-        ApplicationDelegate.shared.application(
-            UIApplication.shared,
-            open: url,
-            sourceApplication: nil,
-            annotation: [UIApplication.OpenURLOptionsKey.annotation]
-        )
     }
 
-        
-    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -42,9 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let fdb = FirestoreDb()
             fdb.listen()
-//            window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
+
             if Auth.auth().currentUser == nil {
                 print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))

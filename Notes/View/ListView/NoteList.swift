@@ -30,37 +30,21 @@ struct NoteList: View {
             SearchBar(text: $searchKeyword)
             List {
                 Section(header: Text("Pinned Notes")) {
-                    if (title != "All") {
-                        ForEach(data.getNotesInFolder(folderName: title).filter {
-                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned
-                        }) { i in
-                            ListElement(note: i, folderName: title)
-                        }
-                        .onDelete(perform: deleteRow)
-                    } else {
-                        ForEach(data.getNotesInFolder(folderName: title).filter {
-                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned
-                        }) { i in
-                            ListElement(note: i, folderName: title)
-                        }
+                    ForEach(data.getNotesInFolder(folderName: title).filter {
+                        ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && $0.pinned
+                    }) { i in
+                        ListElement(note: i, folderName: title)
                     }
+                    .onDelete(perform: deleteRow)
                 }
                 .textCase(nil)
                 Section(header: Text("Unpinned Notes")) {
-                    if (title != "All") {
-                        ForEach(data.getNotesInFolder(folderName: title).filter {
-                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
-                        }) { i in
-                            ListElement(note: i, folderName: title)
-                        }
-                        .onDelete(perform: deleteRow)
-                    } else {
-                        ForEach(data.getNotesInFolder(folderName: title).filter {
-                            ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
-                        }) { i in
-                            ListElement(note: i, folderName: title)
-                        }
+                    ForEach(data.getNotesInFolder(folderName: title).filter {
+                        ( self.searchKeyword.isEmpty ? true : $0.title.lowercased().contains(self.searchKeyword.lowercased())) && !$0.pinned
+                    }) { i in
+                        ListElement(note: i, folderName: title)
                     }
+                    .onDelete(perform: deleteRow)
                 }
                 .textCase(nil)
             }
@@ -123,7 +107,6 @@ struct NoteList: View {
         } else {
             data.deleteNote(note: deleteNote!)
         }
-        
         deleteNote = nil
     }
 }
