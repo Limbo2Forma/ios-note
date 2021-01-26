@@ -18,8 +18,6 @@ class FirestoreDb : ObservableObject {
     @Published var folders = [String]()
     @Published var currentNoteContent = String()
     @Published var currentUser: User? = nil
-    @Published var redirectedAll: String? = nil
-    @Published var redirectedId: String? = nil
     
     var db: DocumentReference? = nil
     let format = DateFormatter()
@@ -27,6 +25,7 @@ class FirestoreDb : ObservableObject {
     var folderListener: ListenerRegistration? = nil
     var noteListener: ListenerRegistration? = nil
     var listenerExist = false
+    var bridge = ""
     
     func listen () {
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -60,6 +59,9 @@ class FirestoreDb : ObservableObject {
     }
     
     func getSharedDeepLink(note: Note) -> [Any] {
+        if note.id.contains("|") {
+            return ["https://notetakingapp-a82e7.web.app://?ownerId=" + note.id.replacingOccurrences(of: "|", with: "&noteId=")]
+        }
         return ["https://notetakingapp-a82e7.web.app://?ownerId=" + self.currentUser!.uid + "&noteId=" + note.id]
     }
     
@@ -368,14 +370,8 @@ class FirestoreDb : ObservableObject {
     }
     
     func createNote(ownerId: String, noteId: String) {
-        self.redirectedAll = "All"
-        self.redirectedId = noteId
-//        self.redirectedAll = "All"
-        print("redirect", redirectedAll, redirectedId)
-        
         if self.currentUser!.uid != ownerId {
-            self.redirectedId = ownerId + "|" + noteId
-            db!.collection("notes").document(self.redirectedId!).setData([
+            db!.collection("notes").document(ownerId + "|" + noteId).setData([
                 "ownerRef": Firestore.firestore().collection("users").document(ownerId).collection("notes").document(noteId),
                 "folders": ["All"],
                 "pinned": false
@@ -388,12 +384,7 @@ class FirestoreDb : ObservableObject {
         }
         print("Owned already")
     }
-//
-    func resetRedirect() {
-//        self.redirectedAll = nil
-//        self.redirectedId = nil
-    }
-    
+
     func updateNote(note: Note) {
         if (note.id.contains("|")) {
             let component = note.id.components(separatedBy: "|")
