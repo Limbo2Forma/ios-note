@@ -1,5 +1,17 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 import SwiftUI
 import Firebase
+
+// This fuction to user edit the note such as show or share the note
 
 struct EditNoteView : View {
     
@@ -28,7 +40,7 @@ struct EditNoteView : View {
             self.title = note?.title ?? ""
             data.resetRedirect()
         }
-        .navigationBarTitle(Text(note?.title ?? "New Note"), displayMode: .inline)
+        .navigationBarTitle(Text(note?.title ?? "New Note"), displayMode: .inline) // title navigation bar
         .edgesIgnoringSafeArea(.bottom)
         .sheet(isPresented: $showSheet, content: {
             ShowSheet(note: note!, folders: data.folders, showPicker: $showSheet, isShareToSocialMedia: $isShareToSocialMedia)
@@ -45,18 +57,28 @@ struct EditNoteView : View {
         .navigationBarItems(trailing:
             HStack(spacing: 20) {
                 if (note != nil) {
+<<<<<<< HEAD
                     Button(action: {
                         self.showSheet = true
                         self.isShareToSocialMedia = false
                     }) {
+=======
+                    // create the button for add note to folder
+                    Button(action: { self.showAddNoteToFolder = true }) {
+>>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
                         Image(systemName: "note.text.badge.plus")
                             .resizable().frame(width: 26, height: 23).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))
                     }
+<<<<<<< HEAD
                     Button(action: {
                         self.showSheet.toggle()
                         self.isShareToSocialMedia = true
                     }) {
+=======
+                    // create the button for share the note in social media such as facebook, whatApps, ...
+                    Button(action: { self.isShareToSocialMedia.toggle()}) {
+>>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
                         Image(systemName: "square.and.arrow.up.on.square.fill")
                             .resizable().frame(width: 23, height: 23).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))

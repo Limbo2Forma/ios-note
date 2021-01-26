@@ -1,10 +1,13 @@
-//
-//  SceneDelegate.swift
-//  Notes
-//
-//  Created by Kavsoft on 29/02/20.
-//  Copyright © 2020 Kavsoft. All rights reserved.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2020C
+  Assessment: Final Project
+  Author: Team 1 
+  Created  date: 01/01/2020 
+  Last modified: 26/01/2020
+  Acknowledgement: Acknowledge the resources that you use here. 
+*/
 
 import UIKit
 import SwiftUI
@@ -33,7 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             fdb.listen()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e99f2060ee4752cb2f1a67b7eb403e4574afd2f
             if Auth.auth().currentUser == nil {
                 print("Auth is nil >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 window.rootViewController = UIHostingController(rootView: Login().environmentObject(fdb))
