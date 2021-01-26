@@ -21,7 +21,7 @@ struct ListElement: View {
     @EnvironmentObject var data: FirestoreDb
     
     var body: some View {
-        NavigationLink(destination: EditNoteView(note: note, destination: folderName), tag: note.id, selection: $data.redirectedId) {
+        NavigationLink(destination: EditNoteView(note: note, destination: folderName)) {
             HStack(spacing: 10) {
                 Image(systemName: "doc.richtext")
                 .resizable()

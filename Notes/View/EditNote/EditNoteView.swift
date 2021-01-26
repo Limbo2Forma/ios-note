@@ -38,7 +38,6 @@ struct EditNoteView : View {
         }
         .onAppear {
             self.title = note?.title ?? ""
-            data.resetRedirect()
         }
         .navigationBarTitle(Text(note?.title ?? "New Note"), displayMode: .inline) // title navigation bar
         .edgesIgnoringSafeArea(.bottom)
@@ -71,7 +70,7 @@ struct EditNoteView : View {
                     }) {
                     // create the button for share the note in social media such as facebook, whatApps, ...
                         Image(systemName: "square.and.arrow.up.on.square.fill")
-                            .resizable().frame(width: 23, height: 23).foregroundColor(Color.blue)
+                            .resizable().frame(width: 26, height: 20).foregroundColor(Color.blue)
                                 .font(Font.title.weight(.thin))
                     }
                 }
