@@ -59,6 +59,9 @@ class FirestoreDb : ObservableObject {
     }
     
     func getSharedDeepLink(note: Note) -> [Any] {
+        if note.id.contains("|") {
+            return ["https://notetakingapp-a82e7.web.app://?ownerId=" + note.id.replacingOccurrences(of: "|", with: "&noteId=")]
+        }
         return ["https://notetakingapp-a82e7.web.app://?ownerId=" + self.currentUser!.uid + "&noteId=" + note.id]
     }
     
